@@ -5,7 +5,7 @@
             <ul class="list">
 
                 <li class="header">MAIN NAVIGATION</li>
-                
+
                 <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
                     <a href="{{ route('admin.dashboard') }}">
                         <i class="material-icons">dashboard</i>
@@ -18,18 +18,6 @@
                         <span>Sliders</span>
                     </a>
                 </li>
-                {{-- <li class="{{ Request::is('admin/properties*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.properties.index') }}">
-                        <i class="material-icons">home</i>
-                        <span>Property</span>
-                    </a>
-                </li>
-                <li class="{{ Request::is('admin/features*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.features.index') }}">
-                        <i class="material-icons">star</i>
-                        <span>Features</span>
-                    </a>
-                </li> --}}
 
                 <li class="{{ Request::is('admin/services*') ? 'active' : '' }}">
                     <a href="{{ route('admin.services.index') }}">
@@ -49,6 +37,38 @@
                     <a href="{{ route('admin.album') }}">
                         <i class="material-icons">view_list</i>
                         <span>Gallery</span>
+                    </a>
+                </li>
+
+                <li class="header">Acomodation</li>
+                <li class="{{ Request::is('admin/rooms*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.rooms.index') }}">
+                        <i class="material-icons">hotel</i>
+                        <span>Rooms</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/features*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.features.index') }}">
+                        <i class="material-icons">star</i>
+                        <span>Features</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/types*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.types.index') }}">
+                        <i class="material-icons">casino</i>
+                        <span>Types</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/guests*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.guests.index') }}">
+                        <i class="material-icons">elevator</i>
+                        <span>Guests</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/bookings*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.bookings.index') }}">
+                        <i class="material-icons">night_shelter</i>
+                        <span>Bookings</span>
                     </a>
                 </li>
 
@@ -85,7 +105,7 @@
                         <span>Roles</span>
                     </a>
                 </li>
- 
+
                 <li class="header"> </li>
                 <li class="{{ Request::is('admin/settings*') ? 'active' : '' }}">
                     <a href="javascript:void(0);" class="menu-toggle">
@@ -115,10 +135,10 @@
                         </li> --}}
                     </ul>
                 </li>
-                
+
 
             </ul>
         </div>
         <!-- #Menu -->
-        
+
     </aside>

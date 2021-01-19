@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// FRONT-END ROUTES
+/***** Front-end Routes *****/
 Route::get('/', 'FrontpageController@index')->name('home');
 Route::get('/search', 'FrontpageController@search')->name('search');
 
@@ -29,30 +29,29 @@ Route::get('/blog/author/{username}', 'PagesController@blogAuthor')->name('blog.
 Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::post('/contact', 'PagesController@messageContact')->name('contact.message');
 
-
-
+/***** Auth Routes *****/
 Auth::routes();
 
-// Route::get('/home', 'HomeController@index')->name('home'); 
-// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function() {
-//     Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]);
-// });
 
-
-
-
-// Back-end routes 
+/***** Back-end Routes *****/
 Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'as'=>'admin.'], function(){
     Route::get('dashboard','DashboardController@index')->name('dashboard');
-    Route::resource('users', 'UsersController')->middleware('can:manage-users');
-    Route::resource('roles','RolesController');
-    Route::resource('tags','TagController');
-    Route::resource('categories','CategoryController');
-    Route::resource('posts','PostController');
-    Route::resource('sliders','SliderController');
-    Route::resource('services','ServiceController');
-    Route::resource('testimonials','TestimonialController');
 
+    Route::resource('users', 'UsersController')->middleware('can:manage-users');
+    Route::resource('roles', 'RolesController');
+    Route::resource('tags', 'TagController');
+    Route::resource('categories', 'CategoryController');
+    Route::resource('posts', 'PostController');
+    Route::resource('sliders', 'SliderController');
+    Route::resource('services', 'ServiceController');
+    Route::resource('testimonials', 'TestimonialController');
+    Route::resource('rooms', 'RoomsController');
+    Route::resource('features', 'FeaturesController');
+    Route::resource('types', 'TypesController');
+    Route::resource('guests', 'GuestController');
+    Route::resource('bookings', 'BookingsController');
+
+    Route::post('rooms/gallery/delete','RoomsController@galleryImageDelete')->name('gallery-delete');
 
     Route::get('profile','DashboardController@profile')->name('profile');
     Route::post('profile','DashboardController@profileUpdate')->name('profile.update');
