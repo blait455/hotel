@@ -19,6 +19,13 @@ Route::get('/search', 'FrontpageController@search')->name('search');
 
 Route::get('/gallery', 'PagesController@gallery')->name('gallery');
 
+Route::get('/rooms', 'PagesController@rooms')->name('rooms');
+Route::get('/rooms/{id}', 'PagesController@showRoom')->name('room.show');
+Route::post('/rooms/comment/{id}', 'PagesController@roomComments')->name('room.comment');
+Route::post('/rooms/rating', 'PagesController@roomRating')->name('room.rating');
+Route::get('/rooms/type/{id}', 'PagesController@roomType')->name('room.type');
+
+
 Route::get('/blog', 'PagesController@blog')->name('blog');
 Route::get('/blog/{id}', 'PagesController@blogshow')->name('blog.show');
 Route::post('/blog/comment/{id}', 'PagesController@blogComments')->name('blog.comment');

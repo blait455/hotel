@@ -5,10 +5,10 @@
         </div>
         <!-- Slider -->
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:980px;height:380px;overflow:hidden;">
-            @foreach($property->gallery as $gallery)
+            @foreach($room->gallery as $gallery)
             <div>
-                <img data-u="image" src="{{Storage::url('property/gallery/'.$gallery->name)}}" />
-                <img data-u="thumb" src="{{Storage::url('property/gallery/'.$gallery->name)}}" />
+                <img data-u="image" src="{{Storage::url('room/gallery/'.$gallery->name)}}" />
+                <img data-u="thumb" src="{{Storage::url('room/gallery/'.$gallery->name)}}" />
             </div>
             @endforeach
         </div>

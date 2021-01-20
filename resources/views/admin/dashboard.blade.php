@@ -209,7 +209,7 @@
                                     <td>{{ ++$key }}.</td>
                                     <td>
                                         <span title="{{ $comment->body }}">
-                                            {{ str_limit($comment->body, 10) }}
+                                            {{ \Illuminate\Support\Str::limit($comment->body, 10) }}
                                         </span>
                                     </td>
                                     <td>

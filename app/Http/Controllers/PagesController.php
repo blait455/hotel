@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\Contact;
 
-// use App\Property;
-// use App\Message;
 use App\Gallery;
 use App\Comment;
-// use App\Rating;
 use App\Post;
+use App\Rating;
+use App\Room;
+use App\Type;
 use App\User;
 
 use Carbon\Carbon;
@@ -21,37 +21,74 @@ use DB;
 
 class PagesController extends Controller
 {
-    public function properties()
+    public function rooms()
     {
-        $cities     = Property::select('city','city_slug')->distinct('city_slug')->get();
-        $properties = Property::latest()->with('rating')->withCount('comments')->paginate(12);
+        $types = Type::all();
+        $rooms = Room::latest()->with('rating')->withCount('comments')->paginate(12);
 
-        return view('pages.properties.property', compact('properties','cities'));
+        return view('pages.rooms.index', compact('rooms', 'types'));
     }
 
-    public function propertieshow($slug)
+    // ROOMS ACCORDING TO TYPES
+    public function roomType($id)
     {
-        $property = Property::with('features','gallery','user','comments')
+        $types = Type::where('id', $id)->get();
+        $rooms = Room::where('type_id', $id)->latest()->with('rating')->withCount('comments')->paginate(12);
+
+        return view('pages.rooms.index', compact('rooms','types'));
+    }
+
+
+    public function showRoom($slug)
+    {
+        $room = Room::with('features','gallery','comments')
                             ->withCount('comments')
                             ->where('slug', $slug)
                             ->first();
 
-        $rating = Rating::where('property_id',$property->id)->where('type','property')->avg('rating');                   
+        $rating = Rating::where('room_id',$room->id)->where('type','room')->avg('rating');
 
-        $relatedproperty = Property::latest()
-                    ->where('purpose', $property->purpose)
-                    ->where('type', $property->type)
-                    ->where('bedroom', $property->bedroom)
-                    ->where('bathroom', $property->bathroom)
-                    ->where('id', '!=' , $property->id)
-                    ->take(5)->get();
-
-        $videoembed = $this->convertYoutube($property->video, 560, 315);
-
-        $cities = Property::select('city','city_slug')->distinct('city_slug')->get();
-
-        return view('pages.properties.single', compact('property','rating','relatedproperty','videoembed','cities'));
+        return view('pages.rooms.single', compact('room', 'rating'));
     }
+
+        // ROOM COMMENT
+        public function roomComments(Request $request, $id)
+        {
+            $request->validate([
+                'body'  => 'required'
+            ]);
+
+            $room = Room::find($id);
+            $room->comments()->create(
+                [
+                    'user_id'   => Auth::id(),
+                    'body'      => $request->body,
+                    'parent'    => $request->parent,
+                    'parent_id' => $request->parent_id
+                ]
+            );
+
+            return back();
+        }
+
+
+        // ROOM RATING
+        public function roomRating(Request $request)
+        {
+            $rating      = $request->input('rating');
+            $room_id = $request->input('room_id');
+            $user_id     = $request->input('user_id');
+            $type        = 'room';
+
+            $rating = Rating::updateOrCreate(
+                ['user_id' => $user_id, 'room_id' => $room_id, 'type' => $type],
+                ['rating' => $rating]
+            );
+
+            if($request->ajax()){
+                return response()->json(['rating' => $rating]);
+            }
+        }
 
 
     // AGENT PAGE
@@ -92,7 +129,7 @@ class PagesController extends Controller
 
     public function blogshow($slug)
     {
-        $post = Post::with('comments')->withCount('comments')->where('slug', $slug)->first(); 
+        $post = Post::with('comments')->withCount('comments')->where('slug', $slug)->first();
 
         $blogkey = 'blog-' . $post->id;
         if(!Session::has($blogkey)){
@@ -186,7 +223,7 @@ class PagesController extends Controller
 
     }
 
-    
+
     // CONATCT PAGE
     public function contact()
     {
@@ -204,7 +241,7 @@ class PagesController extends Controller
 
         $message  = $request->message;
         $mailfrom = $request->email;
-        
+
         Message::create([
             'agent_id'  => 1,
             'name'      => $request->name,
@@ -212,7 +249,7 @@ class PagesController extends Controller
             'phone'     => $request->phone,
             'message'   => $message
         ]);
-            
+
         $adminname  = User::find(1)->name;
         $mailto     = $request->mailto;
 
@@ -239,66 +276,5 @@ class PagesController extends Controller
     }
 
 
-    // PROPERTY COMMENT
-    public function propertyComments(Request $request, $id)
-    {
-        $request->validate([
-            'body'  => 'required'
-        ]);
 
-        $property = Property::find($id);
-
-        $property->comments()->create(
-            [
-                'user_id'   => Auth::id(),
-                'body'      => $request->body,
-                'parent'    => $request->parent,
-                'parent_id' => $request->parent_id
-            ]
-        );
-
-        return back();
-    }
-
-
-    // PROPERTY RATING
-    public function propertyRating(Request $request)
-    {
-        $rating      = $request->input('rating');
-        $property_id = $request->input('property_id');
-        $user_id     = $request->input('user_id');
-        $type        = 'property';
-
-        $rating = Rating::updateOrCreate(
-            ['user_id' => $user_id, 'property_id' => $property_id, 'type' => $type],
-            ['rating' => $rating]
-        );
-
-        if($request->ajax()){
-            return response()->json(['rating' => $rating]);
-        }
-    }
-
-
-    // PROPERTY CITIES
-    public function propertyCities()
-    {
-        $cities     = Property::select('city','city_slug')->distinct('city_slug')->get();
-        $properties = Property::latest()->with('rating')->withCount('comments')
-                        ->where('city_slug', request('cityslug'))
-                        ->paginate(12);
-
-        return view('pages.properties.property', compact('properties','cities'));
-    }
-
-
-    // YOUTUBE LINK TO EMBED CODE
-    private function convertYoutube($youtubelink, $w = 250, $h = 140) {
-        return preg_replace(
-            "/\s*[a-zA-Z\/\/:\.]*youtu(be.com\/watch\?v=|.be\/)([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i",
-            "<iframe width=\"$w\" height=\"$h\" src=\"//www.youtube.com/embed/$2\" frameborder=\"0\" allowfullscreen></iframe>",
-            $youtubelink
-        );
-    }
-    
 }

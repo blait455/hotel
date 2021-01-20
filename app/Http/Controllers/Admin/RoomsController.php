@@ -27,7 +27,8 @@ class RoomsController extends Controller
      */
     public function index()
     {
-        $rooms = Room::latest()->get();
+        $rooms = Room::latest()->withCount('comments')->get();
+
 
         return view('admin.rooms.index',compact('rooms'));
     }
@@ -124,7 +125,7 @@ class RoomsController extends Controller
      */
     public function show(Room $room)
     {
-        // $room = Room::withCount('comments')->find($room->id);
+        $room = Room::withCount('comments')->find($room->id);
 
         return view('admin.rooms.show',compact('room'));
     }

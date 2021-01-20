@@ -14,10 +14,14 @@
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger">
                     <i class="material-icons">menu</i>
                 </a>
-                
+
                 <ul class="right hide-on-med-and-down">
                     <li class="{{ Request::is('/') ? 'active' : '' }}">
                         <a href="{{ route('home') }}">Home</a>
+                    </li>
+
+                    <li class="{{ Request::is('rooms') ? 'active' : '' }}">
+                        <a href="{{ route('rooms') }}">Rooms</a>
                     </li>
 
                     <li class="{{ Request::is('gallery') ? 'active' : '' }}">
@@ -49,7 +53,7 @@
                                     <a href="{{ route('admin.dashboard') }}" class="indigo-text">
                                         <i class="material-icons">person</i>Profile
                                     </a>
-                                
+
                                 @endif
                             </li>
                             <li>
@@ -70,7 +74,7 @@
             </div>
         </div>
     </nav>
-    
+
     <ul class="sidenav" id="mobile-demo">
         <li class="{{ Request::is('/') ? 'active' : '' }}">
             <a href="{{ route('home') }}">Home</a>

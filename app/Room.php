@@ -21,4 +21,14 @@ class Room extends Model
     {
         return $this->hasMany(RoomImage::class);
     }
+
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'commentable');
+    }
+
+    public function rating()
+    {
+        return $this->hasMany(Rating::class, 'room_id');
+    }
 }
