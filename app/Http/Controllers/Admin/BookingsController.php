@@ -56,7 +56,6 @@ class BookingsController extends Controller
             'phone'     => 'required',
             'nights'    => 'required',
             'price'     => 'required',
-            'status'    => 'required'
         ]);
 
         $guest = new Guest();
@@ -71,14 +70,18 @@ class BookingsController extends Controller
 
         $booking = new Booking();
         $booking->guest_id = $guest->id;
-        $booking->user_id = Auth::id();
+        $booking->user_id = Auth::user()->hasAnyRoles(['admin', 'author']) ?  Auth::id() : '';
         $booking->room_id = $request->room_id;
-        $booking->status  = $request->status;
+        if(isset($request->status)){
+            $booking->status = $request->status;
+        }else{
+            $booking->status = false;
+        }
         $booking->save();
 
         if ($request->status) {
             $room = Room::find($request->room_id);
-            $room->status = 3;
+            $room->status = 2;
             $room->update();
 
             Toastr::success('message', 'Booked successfully and room has been reserved.');
@@ -86,8 +89,7 @@ class BookingsController extends Controller
             Toastr::success('message', 'Booked successfully and room not reserved.');
         }
 
-        return redirect()->route('admin.bookings.index');
-
+        return back();
     }
 
     /**

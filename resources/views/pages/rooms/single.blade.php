@@ -191,6 +191,54 @@
                     </div>
 
                 </div>
+
+
+                <div class="col s12 m4">
+                    <div class="clearfix">
+
+                        <div>
+                            <ul class="collection with-header m-t-0">
+                                <li class="collection-header grey lighten-4">
+                                    <h5 class="m-0">Book for Reservation</h5>
+                                </li>
+                                <li class="collection agent-message">
+                                    <form class="agent-message-box" action="{{route('admin.bookings.store')}}" method="POST" enctype="multipart/form-data">
+                                        @csrf
+                                        <small class="text-red">*Note: Bookings are verified before reservations can be made</small>
+
+                                        <input type="hidden" name="room_id" value="{{ $room->id }}">
+
+                                        <div class="box">
+                                            <input type="text" name="name" placeholder="Your Name">
+                                        </div>
+                                        <div class="box">
+                                            <input type="email" name="email" placeholder="Your Email">
+                                        </div>
+                                        <div class="box">
+                                            <input type="number" name="phone" placeholder="Your Phone">
+                                        </div>
+                                        <div class="box">
+                                            <input type="number" name="nights" placeholder="Number of Nights">
+                                        </div>
+                                        <div class="box">
+                                            <input type="number" name="price" placeholder="Price = Room price x nights">
+                                        </div>
+                                        <div class="box">
+                                            <label for="pop">Proof of Payment</label>
+                                            <input type="file" name="pop" placeholder="Proof of Payment" >
+                                        </div>
+                                        <div class="box">
+                                            <button id="msgsubmitbtn" class="btn waves-effect waves-light w100 indigo" type="submit">
+                                                BOOK
+                                                <i class="material-icons left">send</i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
