@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,8 @@ use Carbon\Carbon;
 // use App\Property;
 use App\Post;
 use App\Comment;
-
+use App\Guest;
+use App\Room;
 use App\Setting;
 // use App\Message;
 use App\User;
@@ -27,20 +29,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        // $propertycount = Property::count();
-        $postcount     = Post::count();
-        $commentcount  = Comment::count();
-        $usercount     = User::count();
-
-        // $properties    = Property::latest()->with('user')->take(5)->get();
-        $posts         = Post::latest()->withCount('comments')->take(5)->get();
-        // $users         = User::with('role')->get();
-        $users         = User::all();
-        $comments      = Comment::with('users')->take(5)->get();
+        $roomcount      = Room::count();
+        $postcount      = Post::count();
+        $commentcount   = Comment::count();
+        $usercount      = User::count();
+        $rooms          = Room::latest()->take(5)->get();
+        $posts          = Post::latest()->withCount('comments')->take(5)->get();
+        $users          = User::all();
+        $comments       = Comment::with('users')->take(5)->get();
+        $guests         = Guest::all();
+        $bookings       = Booking::all();
 
         return view('admin.dashboard', compact(
-            'postcount', 'commentcount', 'usercount',
-            'posts',     'users',        'comments'
+            'postcount', 'commentcount', 'usercount', 'roomcount',
+            'posts', 'users', 'comments', 'rooms', 'guests', 'bookings'
         ));
     }
 
@@ -158,7 +160,7 @@ class DashboardController extends Controller
             }
             $userimage = Image::make($image)->stream();
             Storage::disk('public')->put('users/'.$imagename, $userimage);
-            
+
         }else{
             $imagename = $user->image;
         }

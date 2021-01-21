@@ -230,7 +230,7 @@
                                         <div class="box">
                                             <button id="msgsubmitbtn" class="btn waves-effect waves-light w100 indigo" type="submit">
                                                 BOOK
-                                                <i class="material-icons left">send</i>
+                                                <i class="material-icons right">send</i>
                                             </button>
                                         </div>
                                     </form>

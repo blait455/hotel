@@ -37,6 +37,7 @@
                                     <th>Room</th>
                                     <th>Price</th>
                                     <th>Status</th>
+                                    <th>Nights</th>
                                     <th width="150">Action</th>
                                 </tr>
                             </thead>
@@ -58,10 +59,13 @@
                                             <span class="badge bg-pink">Pending</span>
                                         @endif
                                     </td>
+                                    <td>{{ $booking->guest->nights }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('admin.bookings.edit',$booking->id) }}" class="btn btn-info btn-sm waves-effect">
-                                            <i class="material-icons">edit</i>
-                                        </a>
+                                        @if (!$booking->status)
+                                            <a href="{{route('admin.bookings.reserve',$booking->id)}}" class="btn btn-info btn-sm waves-effect">
+                                                <i class="material-icons">check</i>
+                                            </a>
+                                        @endif
                                         {{-- @can('delete') --}}
                                             <button type="button" class="btn btn-danger btn-sm waves-effect" onclick="deleteBooking({{ $booking->id }})">
                                                 <i class="material-icons">delete</i>

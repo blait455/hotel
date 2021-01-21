@@ -42,7 +42,7 @@ Auth::routes();
 
 /***** Back-end Routes *****/
 Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'as'=>'admin.'], function(){
-    Route::get('dashboard','DashboardController@index')->name('dashboard');
+    Route::get('dashboard','DashboardController@index')->name('dashboard')->middleware('auth');
 
     Route::resource('users', 'UsersController')->middleware('can:manage-users');
     Route::resource('roles', 'RolesController');
@@ -57,6 +57,8 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'as'=>'admin.'], function
     Route::resource('types', 'TypesController');
     Route::resource('guests', 'GuestController');
     Route::resource('bookings', 'BookingsController');
+
+    Route::get('reserve/{id}/', 'BookingsController@reserve')->name('bookings.reserve');
 
     Route::post('rooms/gallery/delete','RoomsController@galleryImageDelete')->name('gallery-delete');
 

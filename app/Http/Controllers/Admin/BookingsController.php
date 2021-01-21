@@ -123,9 +123,23 @@ class BookingsController extends Controller
      * @param  \App\Booking  $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(Booking $booking)
     {
-        //
+
+    }
+
+    public function reserve($id) {
+        $booking = Booking::find($id);
+        $booking->status = true;
+        $booking->update();
+
+        $room = Room::find($booking->room_id);
+        $room->status = 2;
+        $room->update();
+
+        Toastr::success('message', 'Booking updated successfully and room has been reserved.');
+
+        return back();
     }
 
     /**
@@ -136,6 +150,14 @@ class BookingsController extends Controller
      */
     public function destroy(Booking $booking)
     {
-        //
+        $room = Room::find($booking->room_id);
+        $room->status = true;
+        $room->update();
+
+        $booking->delete();
+
+        Toastr::success('message', 'Booking deleted successfully and room is now available.');
+
+        return back();
     }
 }

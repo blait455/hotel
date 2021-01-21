@@ -15,17 +15,17 @@
 
     <!-- Widgets -->
     <div class="row clearfix">
-        {{-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-pink hover-expand-effect">
                 <div class="icon">
                     <i class="material-icons">playlist_add_check</i>
                 </div>
                 <div class="content">
-                    <div class="text">TOTAL PROPERTY</div>
-                    <div class="number count-to" data-from="0" data-to="{{ $propertycount }}" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="text">TOTAL ROOMS</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $roomcount }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
-        </div> --}}
+        </div>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
             <div class="info-box bg-cyan hover-expand-effect">
                 <div class="icon">
@@ -59,15 +59,60 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-pink hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">playlist_add_check</i>
+                </div>
+                <div class="content">
+                    <div class="text">TOTAL QUESTS </div>
+                    <div class="number count-to" data-from="0" data-to="{{ $guests->count() }}" data-speed="15" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-cyan hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">help</i>
+                </div>
+                <div class="content">
+                    <div class="text">TOTAL GUESTS IN</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $guests->where('status', true)->count() }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-light-green hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">forum</i>
+                </div>
+                <div class="content">
+                    <div class="text">TOTAL RESERVATIONS</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $bookings->where('status', true)->count() }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box bg-orange hover-expand-effect">
+                <div class="icon">
+                    <i class="material-icons">person_add</i>
+                </div>
+                <div class="content">
+                    <div class="text">TOTAL USER</div>
+                    <div class="number count-to" data-from="0" data-to="{{ $usercount }}" data-speed="1000" data-fresh-interval="20"></div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- #END# Widgets -->
 
-    {{-- <div class="row clearfix">
+    <div class="row clearfix">
         <!-- RECENT PROPERTIES -->
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
             <div class="card">
                 <div class="header">
-                    <h2>RECENT PROPERTIES</h2>
+                    <h2>RECENT ROOMS</h2>
                 </div>
                 <div class="body">
                     <div class="table-responsive">
@@ -75,30 +120,34 @@
                             <thead>
                                 <tr>
                                     <th>SL.</th>
-                                    <th>Title</th>
+                                    <th>Name</th>
                                     <th>Price</th>
-                                    <th>City</th>
+                                    <th>Type</th>
                                     <th><i class="material-icons small">star</i></th>
-                                    <th>Manager</th>
+                                    {{-- <th>Manager</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($properties as $key => $property)
+                                @foreach($rooms as $key => $room)
                                 <tr>
                                     <td>{{ ++$key }}.</td>
                                     <td>
-                                        <span title="{{ $property->title }}">
-                                            {{ str_limit($property->title, 10) }}
+                                        <span title="{{ $room->name }}">
+                                            {{ \Illuminate\Support\Str::limit($room->name, 10) }}
                                         </span>
                                     </td>
-                                    <td>&dollar;{{ $property->price }}</td>
-                                    <td>{{ $property->city }}</td>
+                                    <td>&dollar;{{ $room->price }}</td>
+                                    <td>{{ $room->type->name }}</td>
                                     <td>
-                                        @if($property->featured == 1)
-                                            <span class="label bg-green">F</span>
+                                        @if($room->status == 1)
+                                            <span class="label bg-green">T</span>
+                                        @elseif($room->status == 0)
+                                            <span class="label bg-yellow">A</span>
+                                        @elseif($room->status == 2)
+                                            <span class="label bg-orange">B</span>
                                         @endif
                                     </td>
-                                    <td>{{ strtok($property->user->name, " ")}}</td>
+                                    {{-- <td>{{ strtok($property->user->name, " ")}}</td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -148,7 +197,7 @@
             </div>
         </div>
         <!-- #END# RECENT POSTS -->
-    </div> --}}
+    </div>
 
     <div class="row clearfix">
         <!-- USER LIST -->

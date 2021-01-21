@@ -108,6 +108,7 @@ class GuestController extends Controller
         $guest->nights  = $request->nights;
         $guest->price  = $request->price;
         $guest->status  = $request->status;
+
         $guest->save();
 
         Toastr::success('message', 'Guest updated successfully.');
