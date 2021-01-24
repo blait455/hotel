@@ -18,14 +18,14 @@
             <div class="card">
 
                 <div class="header bg-indigo">
-                    <h2>SHOW ROOM</h2>
+                    <h2>SHOW DRINK</h2>
                 </div>
 
                 <div class="header">
                     <h2>
-                        {{$room->name}}
+                        {{$drink->name}}
                         <br>
-                        <small>Posted on {{$room->created_at->toFormattedDateString()}}</small>
+                        <small>Posted on {{$drink->created_at->toFormattedDateString()}}</small>
                     </h2>
                 </div>
 
@@ -33,30 +33,22 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <strong>Price : </strong>
-                            <span class="right"> <span>&#8358;</span>{{$room->price}}</span>
+                            <span class="right"> <span>&#8358;</span>{{$drink->price}}</span>
                         </li>
                         <li class="list-group-item">
                             <strong>Type : </strong>
-                            <span class="right">{{$room->type->name}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Beds : </strong>
-                            <span class="right">{{$room->beds}}</span>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Floor : </strong>
-                            <span class="right">{{$room->floor}}</span>
+                            <span class="right">{{$drink->type->name}}</span>
                         </li>
                     </ul>
                 </div>
 
                 <div class="body">
                     <h5>Description</h5>
-                    {!!$room->description!!}
+                    {!!$drink->description!!}
                 </div>
             </div>
 
-            @if(!$room->gallery->isEmpty())
+            {{-- @if(!$room->gallery->isEmpty())
             <div class="card">
                 <div class="header bg-red">
                     <h2>GALLERY IMAGE</h2>
@@ -65,22 +57,22 @@
                     <div class="gallery-box">
                         @foreach($room->gallery as $gallery)
                         <div class="gallery-image">
-                            <img class="img-responsive" src="{{Storage::url('room/gallery/'.$gallery->name)}}" alt="{{$room->name}}">
+                            <img class="img-responsive" src="{{Storage::url('property/gallery/'.$gallery->name)}}" alt="{{$property->title}}">
                         </div>
                         @endforeach
                     </div>
                 </div>
             </div>
-            @endif
+            @endif --}}
 
             {{-- COMMENTS --}}
-            <div class="card">
+            {{-- <div class="card">
                 <div class="header">
-                    <h2>{{ $room->comments_count }} Comments</h2>
+                    <h2>{{ $property->comments_count }} Comments</h2>
                 </div>
                 <div class="body">
 
-                    @foreach($room->comments as $comment)
+                    @foreach($property->comments as $comment)
 
                         @if($comment->parent_id == NULL)
                             <div class="comment">
@@ -119,34 +111,23 @@
                     @endforeach
 
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-            <div class="card">
-                <div class="header bg-green">
-                    <h2>FEATURES</h2>
-                </div>
-                <div class="body">
-                    @foreach($room->features as $feature)
-                        <span class="label bg-green">{{$feature->name}}</span>
-                    @endforeach
-                </div>
-            </div>
-
             <div class="card">
                 <div class="header bg-amber">
                     <h2>FEATURED IMAGE</h2>
                 </div>
                 <div class="body">
 
-                    <img class="img-responsive thumbnail" src="{{Storage::url('room/'.$room->image)}}" alt="{{$room->name}}">
+                    <img class="img-responsive thumbnail" src="{{Storage::url('drink/'.$drink->image)}}" alt="{{$drink->name}}">
 
-                    <a href="{{route('admin.rooms.index')}}" class="btn btn-danger btn-lg waves-effect">
+                    <a href="{{route('admin.drinks.index')}}" class="btn btn-danger btn-lg waves-effect">
                         <i class="material-icons left">arrow_back</i>
                         <span>BACK</span>
                     </a>
-                    <a href="{{route('admin.rooms.edit',$room->id)}}" class="btn btn-info btn-lg waves-effect">
+                    <a href="{{route('admin.drinks.edit',$drink->id)}}" class="btn btn-info btn-lg waves-effect">
                         <i class="material-icons">edit</i>
                         <span>EDIT</span>
                     </a>

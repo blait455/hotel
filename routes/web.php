@@ -57,6 +57,10 @@ Route::group(['prefix'=>'admin', 'namespace'=>'Admin', 'as'=>'admin.'], function
     Route::resource('types', 'TypesController');
     Route::resource('guests', 'GuestController');
     Route::resource('bookings', 'BookingsController');
+    Route::resource('food-types', 'FoodTypeController');
+    Route::resource('food-items', 'FoodItemController');
+    Route::resource('drink-categories', 'DrinkCategoryController');
+    Route::resource('drinks', 'DrinkController');
 
     Route::get('reserve/{id}/', 'BookingsController@reserve')->name('bookings.reserve');
 

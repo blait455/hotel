@@ -72,6 +72,32 @@
                     </a>
                 </li>
 
+                <li class="header">Restaurant & Bar</li>
+                <li class="{{ Request::is('admin/food-types*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.food-types.index') }}">
+                        <i class="material-icons">scatter_plot</i>
+                        <span>Food types</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/food-items*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.food-items.index') }}">
+                        <i class="material-icons">fastfood</i>
+                        <span>Food Items</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/drink-categories*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.drink-categories.index') }}">
+                        <i class="material-icons">category</i>
+                        <span>Drink categories</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/drinks*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.drinks.index') }}">
+                        <i class="material-icons">local_bar</i>
+                        <span>Drinks</span>
+                    </a>
+                </li>
+
                 <li class="header">Blog</li>
                 <li class="{{ Request::is('admin/categories*') ? 'active' : '' }}">
                     <a href="{{ route('admin.categories.index') }}">
