@@ -44,9 +44,13 @@ class AppServiceProvider extends ServiceProvider
             //     $view->with('bathroomdistinct', Property::select('bathroom')->distinct()->get());
             // });
 
+            view()->composer('frontend.partials.header', function($view) {
+                // $view->with('footerproperties', Property::latest()->take(3)->get());
+                $view->with('settings', Setting::first());
+            });
             view()->composer('frontend.partials.footer', function($view) {
                 // $view->with('footerproperties', Property::latest()->take(3)->get());
-                $view->with('footersettings', Setting::select('footer','about','facebook','twitter','linkedin')->get());
+                $view->with('footersettings', Setting::select('footer','about', 'email', 'phone', 'address', 'facebook','twitter','linkedin')->get());
             });
 
             view()->composer('frontend.partials.navbar', function($view) {

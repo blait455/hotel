@@ -25,7 +25,7 @@
                     </h2>
                 </div>
                 <div class="body">
-                    <form action="{{route('admin.settings.store')}}" method="POST">
+                    <form action="{{route('admin.settings.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <div class="form-line">
@@ -86,6 +86,23 @@
                                 <label class="form-label">LinkedIn Handler</label>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <img src="{{Storage::url('logo/fav/'.$settings->fav)}}" id="profile-imgsrc" class="img-responsive">
+                            <input type="file" name="fav" id="profile-image-input" style="display:none;">
+                            <button type="button" class="btn bg-grey btn-sm waves-effect m-t-15" id="profile-image-btn">
+                                <i class="material-icons">image</i>
+                                <span>UPLOAD Favicon</span>
+                            </button>
+                        </div>
+                        <div class="form-group">
+                            <img src="{{Storage::url('logo/'.$settings->logo)}}" id="logo-imgsrc" class="img-responsive">
+                            <input type="file" name="logo" id="logo-image-input" style="display:none;">
+                            <button type="button" class="btn bg-grey btn-sm waves-effect m-t-15" id="logo-image-btn">
+                                <i class="material-icons">image</i>
+                                <span>UPLOAD LOGO</span>
+                            </button>
+                        </div>
+
 
                         <button type="submit" class="btn btn-indigo btn-lg m-t-15 waves-effect">
                             <i class="material-icons">save</i>
@@ -93,7 +110,7 @@
                         </button>
 
                     </form>
-                    
+
                 </div>
             </div>
         </div>
@@ -105,5 +122,45 @@
 
 @push('scripts')
 
+<script>
+    $(function(){
+        function showImage(fileInput,imgID){
+            if (fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $(imgID).attr('src',e.target.result);
+                    $(imgID).attr('alt',fileInput.files[0].name);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+        $('#profile-image-btn').on('click', function(){
+            $('#profile-image-input').click();
+        });
+        $('#profile-image-input').on('change', function(){
+            showImage(this, '#profile-imgsrc');
+        });
+    })
+</script>
 
+<script>
+    $(function(){
+        function showImage(fileInput,imgID){
+            if (fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $(imgID).attr('src',e.target.result);
+                    $(imgID).attr('alt',fileInput.files[0].name);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+        $('#logo-image-btn').on('click', function(){
+            $('#logo-image-input').click();
+        });
+        $('#logo-image-input').on('change', function(){
+            showImage(this, '#logo-imgsrc');
+        });
+    })
+</script>
 @endpush

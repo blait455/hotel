@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 use Toastr;
 
 class ServiceController extends Controller
@@ -42,15 +46,29 @@ class ServiceController extends Controller
         $request->validate([
             'title'         => 'required',
             'description'   => 'required|max:200',
-            'icon'          => 'required',
-            'service_order' => 'required',
+            'image' => 'required|mimes:jpeg,jpg,png'
         ]);
+
+        $image = $request->file('image');
+        $slug  = Str::slug($request->title);
+
+        if(isset($image)){
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('service')){
+                Storage::disk('public')->makeDirectory('service');
+            }
+            $service = Image::make($image)->resize(640, 500)->save();
+            Storage::disk('public')->put('service/'.$imagename, $service);
+        }else{
+            $imagename = 'default.png';
+        }
 
         $service = new Service();
         $service->title         = $request->title;
         $service->description   = $request->description;
-        $service->icon          = $request->icon;
-        $service->service_order = $request->service_order;
+        $service->image          = $imagename;
         $service->save();
 
         Toastr::success('message', 'Service created successfully.');
@@ -93,15 +111,31 @@ class ServiceController extends Controller
         $request->validate([
             'title'         => 'required',
             'description'   => 'required|max:200',
-            'icon'          => 'required',
-            'service_order' => 'required',
+            'image' => 'mimes:jpeg,jpg,png'
         ]);
 
+        $image = $request->file('image');
+        $slug  = Str::slug($request->title);
         $service = Service::findOrFail($service->id);
+
+        if(isset($image)){
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+            if(!Storage::disk('public')->exists('service')){
+                Storage::disk('public')->makeDirectory('service');
+            }
+            if(Storage::disk('public')->exists('service/'.$service->image)){
+                Storage::disk('public')->delete('service/'.$service->image);
+            }
+            $serviceimg = Image::make($image)->resize(640, 500)->save();
+            Storage::disk('public')->put('service/'.$imagename, $serviceimg);
+        }else{
+            $imagename = $service->image;
+        }
+
         $service->title         = $request->title;
         $service->description   = $request->description;
-        $service->icon          = $request->icon;
-        $service->service_order = $request->service_order;
+        $service->image         = $imagename;
         $service->save();
 
         Toastr::success('message', 'Service updated successfully.');

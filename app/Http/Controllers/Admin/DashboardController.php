@@ -56,11 +56,11 @@ class DashboardController extends Controller
 
     public function settingStore(Request $request)
     {
-
         $this->validate($request, [
             'name'      => 'required',
             'email'     => 'required',
             'phone'     => 'required',
+            'logo'     => 'mimes:jpeg,jpg,png',
             'address'   => 'required',
             'footer'    => 'required',
             'about'     => 'required',
@@ -69,12 +69,51 @@ class DashboardController extends Controller
             'linkedin'  => 'required|url',
         ]);
 
+        $settings = Setting::first();
+        $image = $request->file('logo');
+        $fav = $request->file('fav');
+        $slug  = Str::slug($request->name);
+        if(isset($image)){
+            $currentDate = Carbon::now()->toDateString();
+            $logoname = $slug.'-'.$currentDate.'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('logo')){
+                Storage::disk('public')->makeDirectory('logo');
+            }
+            if(Storage::disk('public')->exists('logo/'.$settings->logo) && $settings->logo != 'default.png' ){
+                Storage::disk('public')->delete('logo/'.$settings->logo);
+            }
+            $logo = Image::make($image)->stream();
+            Storage::disk('public')->put('logo/'.$logoname, $logo);
+
+        }else{
+            $logoname = $settings->logo;
+        }
+
+        if(isset($fav)){
+            $currentDate = Carbon::now()->toDateString();
+            $favname = 'fav'.'-'.$currentDate.'.'.$fav->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('logo/fav')){
+                Storage::disk('public')->makeDirectory('logo/fav');
+            }
+            if(Storage::disk('public')->exists('logo/fav/'.$settings->fav) && $settings->fav != 'default.png' ){
+                Storage::disk('public')->delete('logo/fav/'.$settings->fav);
+            }
+            $favi = Image::make($fav)->stream();
+            Storage::disk('public')->put('logo/fav/'.$favname, $favi);
+
+        }else{
+            $favname = $settings->fav;
+        }
+
         Setting::updateOrCreate(
             [ 'id'       => 1 ],
             [
               'name'     => $request->name,
               'email'    => $request->email,
-              'logo'     => $request->logo,
+              'logo'     => $logoname,
+              'fav'      => $favname,
               'phone'    => $request->phone,
               'address'  => $request->address,
               'footer'   => $request->footer,

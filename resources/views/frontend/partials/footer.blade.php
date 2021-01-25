@@ -1,57 +1,65 @@
-<footer class="page-footer indigo darken-2">
-    <div class="container">
-        <div class="row">
-            <div class="col m4 s12">
-                <h5 class="white-text uppercase">About Us</h5>
-                @if(isset($footersettings[0]) && $footersettings[0]['about'])
-                    <p class="grey-text text-lighten-4">{{ $footersettings[0]['about'] }}</p>
-                @else
-                    <p class="grey-text text-lighten-4">BLAITlabs</p>
-                @endif
-            </div>
-
-            <div class="col m6 s12">
-                <h5 class="white-text uppercase">Recent Jobs</h5>
-                <ul class="collection border0">
-                </ul>
-            </div>
-            <div class="col m2 s12">
-                <h5 class="white-text uppercase">Menu</h5>
-                <ul>
-                    {{-- <li class="uppercase {{ Request::is('gallery*') ? 'underline' : '' }}">
-                        <a href="{{ route('gallery') }}" class="grey-text text-lighten-3">Gallery</a>
-                    </li>
-
-                    <li class="uppercase {{ Request::is('blog*') ? 'underline' : '' }}">
-                        <a href="{{ route('blog') }}" class="grey-text text-lighten-3">Blog</a>
-                    </li>
-
-                    <li class="uppercase {{ Request::is('contact') ? 'underline' : '' }}">
-                        <a href="{{ route('contact') }}" class="grey-text text-lighten-3">Contact</a>
-                    </li> --}}
-                </ul>
+<footer id="colophon" class="site-footer">
+    <div class="footer-top">
+        <div class="container">
+            <div class="newsletter">
+                <h3>Newsletter</h3>
+                <form method="post" class="form-newsletter">
+                    <input type="email" name="EMAIL" placeholder="Enter your Email" required>
+                    <button type="submit">SUBSCRIBE</button>
+                </form>
             </div>
         </div>
     </div>
-    <div class="footer-copyright">
+    <div class="footer">
         <div class="container">
-            @if(isset($footersettings[0]) && $footersettings[0]['footer'])
-                &copy; <script>document.write(new Date().getFullYear());</script> {{ $footersettings[0]['footer'] }}
-            @else
-                <p> &copy; <script>document.write(new Date().getFullYear());</script> <a href="https://blait.com" target="_blank">BLAITlabs</a></p>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="widget-text">
+                        <div class="footer-location">
+                            <img src="images/logo1-footer.png" alt="">
+                            <p>{{ $footersettings[0]['about'] }}</p>
+                            <ul class="info">
+                                <li><i class="ion-ios-location"></i> <span>{{ $footersettings[0]['address'] }}</span></li>
+                                <li><i class="ion-ios-telephone"></i><a href="tel:8812345678">{{ $footersettings[0]['phone'] }}</a></li>
+                                <li><i class="ion-email"></i><a href="mailto:contact@thimpress.com">{{ $footersettings[0]['email'] }}</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="widget-menu">
+                        <h3 class="widget-title">Menu</h3>
+                        <ul class="menu">
+                            <li><a href="{{ url('/') }}">Home</a></li>
+                            <li><a href="{{ route('rooms') }}">Rooms</a></li>
+                            <li><a href="{{ route('blog') }}">Blog</a></li>
+                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            {{-- <li><a href="#">Gallery</a></li> --}}
+                        </ul>
+                    </div>
+                </div>
 
-            @endif
+                <div class="col-sm-3">
+                    <div class="widget-menu">
+                        <h3 class="widget-title">Connect Us</h3>
+                        <ul class="list-social">
+                            <li><a class="facebook" href="{{ $footersettings[0]['facebook'] }}">Facebook</a></li>
+                            <li><a class="twitter" href="{{ $footersettings[0]['twitter'] }}">Twitter</a></li>
+                            <li><a class="instagram" href="{{ $footersettings[0]['linkedin'] }}">Instagram</a></li>
+                        </ul>
+                    </div>
+                </div>
 
-            @if(isset($footersettings[0]) && $footersettings[0]['facebook'])
-                <a class="grey-text text-lighten-4 right" href="{{ $footersettings[0]['facebook'] }}" target="_blank">FACEBOOK</a>
-            @endif
-            @if(isset($footersettings[0]) && $footersettings[0]['twitter'])
-                <a class="grey-text text-lighten-4 right m-r-10" href="{{ $footersettings[0]['twitter'] }}" target="_blank">TWITTER</a>
-            @endif
-            @if(isset($footersettings[0]) && $footersettings[0]['linkedin'])
-                <a class="grey-text text-lighten-4 right m-r-10" href="{{ $footersettings[0]['linkedin'] }}" target="_blank">LINKEDIN</a>
-            @endif
-
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="copyright-content col-sm-12">
+                    <p class="copyright-text">© 2020 <a href="#">{{ $footersettings[0]['footer'] }}</a></p>
+                </div>
+            </div>
         </div>
     </div>
 </footer>

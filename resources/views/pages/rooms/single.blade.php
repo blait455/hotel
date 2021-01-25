@@ -1,249 +1,187 @@
 @extends('frontend.layouts.app')
 
 @section('styles')
-<style>
-    #map {
-        height: 320px;
-    }
-
-    .jssorl-009-spin img {
-        animation-name: jssorl-009-spin;
-        animation-duration: 1.6s;
-        animation-iteration-count: infinite;
-        animation-timing-function: linear;
-    }
-
-    @keyframes jssorl-009-spin {
-        from {
-            transform: rotate(0deg);
-        }
-
-        to {
-            transform: rotate(360deg);
-        }
-    }
-
-    .jssora106 {display:block;position:absolute;cursor:pointer;}
-    .jssora106 .c {fill:#fff;opacity:.3;}
-    .jssora106 .a {fill:none;stroke:#000;stroke-width:350;stroke-miterlimit:10;}
-    .jssora106:hover .c {opacity:.5;}
-    .jssora106:hover .a {opacity:.8;}
-    .jssora106.jssora106dn .c {opacity:.2;}
-    .jssora106.jssora106dn .a {opacity:1;}
-    .jssora106.jssora106ds {opacity:.3;pointer-events:none;}
-
-    .jssort101 .p {position: absolute;top:0;left:0;box-sizing:border-box;background:#000;}
-    .jssort101 .p .cv {position:relative;top:0;left:0;width:100%;height:100%;box-sizing:border-box;z-index:1;}
-    .jssort101 .a {fill:none;stroke:#fff;stroke-width:400;stroke-miterlimit:10;visibility:hidden;}
-    .jssort101 .p:hover .cv, .jssort101 .p.pdn .cv {border:none;border-color:transparent;}
-    .jssort101 .p:hover{padding:2px;}
-    .jssort101 .p:hover .cv {background-color:rgba(0,0,0,6);opacity:.35;}
-    .jssort101 .p:hover.pdn{padding:0;}
-    .jssort101 .p:hover.pdn .cv {border:2px solid #fff;background:none;opacity:.35;}
-    .jssort101 .pav .cv {border-color:#fff;opacity:.35;}
-    .jssort101 .pav .a, .jssort101 .p:hover .a {visibility:visible;}
-    .jssort101 .t {position:absolute;top:0;left:0;width:100%;height:100%;border:none;opacity:.6;}
-    .jssort101 .pav .t, .jssort101 .p:hover .t{opacity:1;}
-</style>
+<link rel="stylesheet" href="{{ asset('frontend/css/libs/jquery-ui/jquery-ui.min.css') }}">
 @endsection
 
 @section('content')
 
-    <!-- SINGLE PROPERTY SECTION -->
-
-    <section class="section">
-        <div class="container">
-            <div class="row">
-                <div class="col s12 m8">
-                    <div class="single-title">
-                        <h4 class="single-title">{{ $room->name }}</h4>
-                    </div>
-
-                    <div class="address m-b-30">
-                        <i class="small material-icons left">room_preferences</i>
-                        <span class="font-18">{{ $room->type->name }}</span>
-                    </div>
-
-                    <div>
-                        @if($room->status == 1)
-                            <a class="btn-floating btn-small disabled"><i class="material-icons">star</i></a>
-                        @endif
-
-                        @foreach ($room->features as $feature)
-                            <span class="btn btn-small disabled b-r-20">{{ $feature->name}} </span>
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col s12 m4">
-                    <div>
-                        <h4 class="left"><span>&#8358;</span>{{ $room->price }}</h4>
-                        {{-- <button type="button" class="btn btn-small m-t-25 right disabled b-r-20"> For {{ $property->purpose }}</button> --}}
-                    </div>
+    <div id="main-content">
+        <div class="page-title">
+            <div class="page-title-wrapper" data-stellar-background-ratio="0.5">
+                <div class="content container">
+                    <h1 class="heading_primary">Room detail</h1>
+                    <ul class="breadcrumbs">
+                        <li class="item"><a href="url('/')">Home</a></li>
+                        <li class="item"><span class="separator"></span></li>
+                        <li class="item"><a href="{{ route('rooms') }}">Rooms</a></li>
+                        <li class="item"><span class="separator"></span></li>
+                        <li class="item active">{{ $room->name }}</li>
+                    </ul>
                 </div>
             </div>
-            <div class="row">
+        </div>
 
-                <div class="col s12 m8">
-
-                    @if(!$room->gallery->isEmpty())
-                        <div class="single-slider">
-                            @include('pages.rooms.slider')
+        <div class="site-content container">
+            <div class="room-single row">
+                <main class="site-main col-sm-12 col-md-9 flex-first">
+                    <div class="room-wrapper">
+                        <div class="post-media">
+                            <img src="{{Storage::url('room/'.$room->image)}}" alt="">
                         </div>
-                    @else
-                        <div class="single-image">
-                            @if(Storage::disk('public')->exists('room/'.$room->image) && $room->image)
-                                <img src="{{Storage::url('room/'.$room->image)}}" alt="{{$room->name}}" class="imgresponsive">
-                            @endif
+                        <div class="title-share clearfix">
+                            <h2 class="title">{{ $room->name }}</h2>
+                            <div class="social-share">
+                                <ul>
+                                    <li><a class="link facebook" title="Facebook" href="http://www.facebook.com/sharer/sharer.php?u=#" rel="nofollow" onclick="window.open(this.href,this.title,'width=600,height=600,top=200px,left=200px');  return false;" target="_blank"><i class="ion-social-facebook"></i></a></li>
+                                    <li><a class="link twitter" title="Twitter" href="https://twitter.com/intent/tweet?url=#&amp;text=TheTitleBlog" rel="nofollow" onclick="window.open(this.href,this.title,'width=600,height=600,top=200px,left=200px');  return false;" target="_blank"><i class="ion-social-twitter"></i></a></li>
+                                    <li><a class="link google" title="Google" href="https://plus.google.com/share?url=#" rel="nofollow" onclick="window.open(this.href,this.title,'width=600,height=600,top=200px,left=200px');  return false;" target="_blank"><i class="ion-social-googleplus"></i></a>
+                                </ul>
+                            </div>
                         </div>
-                    @endif
-
-                    <div class="single-description p-15 m-b-15 border2 border-top-0">
-                        {!! $room->description !!}
-                    </div>
-
-                    <div>
-                        @if($room->features)
-                            <ul class="collection with-header">
-                                <li class="collection-header grey lighten-4"><h5 class="m-0">Features</h5></li>
-                                @foreach($room->features as $feature)
-                                    <li class="collection-item">{{$feature->name}}</li>
+                        <div class="room_price">
+                            <span class="price_value price_min"><span>&#8358;</span>{{ $room->price }}</span>
+                            <span class="unit">Night</span>
+                        </div>
+                        <div class="description">
+                            {!! $room->description !!}
+                        </div>
+                        <div class="room_additinal">
+                            <h3 class="title style-01">AMENITIES AND SERVICES</h3>
+                            <div class="row">
+                                @foreach ($room->features as $feature)
+                                    <div class="col-sm-4">
+                                        <ul>
+                                            <li><i class="fa fa-check"></i>{{ $feature->name }}</li><hr>
+                                        </ul>
+                                    </div>
                                 @endforeach
-                            </ul>
-                        @endif
-                    </div>
-
-                    <div class="card-no-box-shadow card">
-                        <div class="p-15 grey lighten-4">
-                            <h5 class="m-0">
-                                {{ $room->comments_count }} Comments
-                                @auth
-                                <div class="right" id="rateYo"></div>
-                                @endauth
-                            </h5>
+                            </div>
                         </div>
-                        <div class="single-narebay p-15">
 
-                            @foreach($room->comments as $comment)
-
-                                @if($comment->parent_id == NULL)
-                                    <div class="comment">
-                                        <div class="author-image">
-                                            <span style="background-image:url({{ Storage::url('users/'.$comment->users->image) }});"></span>
+                        <div class="room_review clearfix" id="room_review">
+                            <h3 class="title style-01">{{ $room->comments_count }} &nbsp; REVIEWS</h3>
+                            @foreach ($room->comments as $comment)
+                                @if ($comment->parent_id == NULL)
+                                    <div class="inner">
+                                        <div class="avatar">
+                                            <img src="{{ Storage::url('users/'.$comment->users->image) }}" alt="">
                                         </div>
                                         <div class="content">
-                                            <div class="author-name">
-                                                <strong>{{ $comment->users->name }}</strong>
-                                                <span class="time">{{ $comment->created_at->diffForHumans() }}</span>
-
-                                                @auth
-                                                    <span id="commentreplay" class="right replay" data-commentid="{{ $comment->id }}">Replay</span>
-                                                @endauth
-
-                                            </div>
-                                            <div class="author-comment">
-                                                {{ $comment->body }}
-                                            </div>
+                                            <h4>{{ $comment->users->name }}</h4>
+                                            @auth
+                                                <span class="rating" id="rateYo"></span>
+                                            @endauth
+                                            <strong><small>{{ $comment->created_at->diffForHumans() }}</small></strong>
+                                            <p>{{ $comment->body }}</p> <hr>
                                         </div>
                                         <div id="procomment-{{$comment->id}}"></div>
                                     </div>
                                 @endif
 
-                                @foreach($comment->children as $commentchildren)
-                                    <div class="comment children">
-                                        <div class="author-image">
-                                            <span style="background-image:url({{ Storage::url('users/'.$commentchildren->users->image) }});"></span>
+                                @foreach ($comment->children as $commentchildren)
+                                    <div class="inner">
+                                        <div class="avatar">
+                                            <img src="{{ Storage::url('users/'.$commentchildren->users->image) }}" alt="">
                                         </div>
                                         <div class="content">
-                                            <div class="author-name">
-                                                <strong>{{ $commentchildren->users->name }}</strong>
-                                                <span class="time">{{ $commentchildren->created_at->diffForHumans() }}</span>
-                                            </div>
-                                            <div class="author-comment">
-                                                {{ $commentchildren->body }}
-                                            </div>
+                                            <h4>{{ $commentchildren->users->name }}</h4>
+                                            <strong><small>{{ $commentchildren->created_at->diffForHumans() }}</small></strong>
+                                            <p>{{ $commentchildren->body }}</p>
                                         </div>
                                     </div>
                                 @endforeach
-
                             @endforeach
+                        </div>
 
-                            @auth
-                                <div class="comment-box">
-                                    <h6>Leave a comment</h6>
-                                    <form action="{{ route('room.comment',$room->id) }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="parent" value="0">
+                        @auth
+                            <div class="form-review">
+                                <h4 class="title"><i class="fa fa-pencil"></i>Add review</h4>
+                                <form action="{{ route('room.comment',$room->id) }}" method="post" class="room_comment">
+                                    @csrf
+                                    <input type="hidden" name="parent" value="0">
+                                    <p>Your rating</p>
+                                    <p><span class="rating-star empty"></span></p>
+                                    <p>Your review</p>
+                                    <textarea rows="5" cols="8" name="body" required placeholder=""></textarea>
+                                    <button type="submit" class="submit">Submit</button>
+                                </form>
+                            </div>
+                        @endauth
+                        @guest
+                            <div class="comment-login">
+                                <h6>Please Login to comment</h6>
+                                <a href="{{ route('login') }}" class="submit">Login</a>
+                            </div>
+                        @endguest
+                    </div>
+                </main>
+                <aside id="secondary" class="widget-area col-sm-12 col-md-3 sticky-sidebar">
+                    <div class="wd wd-book-room">
+                        <a href="#" class="book-room">Book This Room</a>
+                        <div id="form-popup-room" class="form-popup-room">
+                            <div class="popup-container">
+                                <a href="#" class="close-popup"><i class="ion-android-close"></i></a>
+                                <form id="hotel-popup-results" name="hb-search-single-room" class="hotel-popup-results" action="{{route('admin.bookings.store')}}" method="POST" enctype="multipart/form-data">
+                                    <div class="room-head">
+                                        <h3 class="room-title">{{ $room->name }}</h3>
+                                        <p class="description">*Note: Bookings are verified before reservations can be made</p>
+                                    </div>
+                                    <div class="search-room-popup">
+                                        <ul class="form-table clearfix">
+                                            <input type="hidden" name="room_id" value="{{ $room->id }}">
+                                            <li class="form-field">
+                                                <input type="text" name="name" id="name" required class="name" placeholder="Your Name*">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="email" name="email" id="email" required class="email" placeholder="Your Email*">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="tel" name="phone" id="phone" required class="phone" placeholder="Your Phone*">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="text" name="add" id="add" required class="add" placeholder="Your Address*">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="text" name="check_in_date" id="popup_check_in_date" required class="check_in_date" placeholder="Arrival Date">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="text" name="check_out_date" id="popup_check_out_date" required class="check_out_date " placeholder="Departure Date">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="text" name="price" id="price" required class="price" placeholder="Price">
+                                            </li>
+                                            <li class="form-field">
+                                                <input type="file" name="pop" id="pop" required class="form-control" placeholder="Proof of payment">
+                                            </li>
 
-                                        <textarea name="body" class="box"></textarea>
-                                        <input type="submit" class="btn indigo" value="Comment">
-                                    </form>
-                                </div>
-                            @endauth
+                                            <li class="form-field room-submit">
+                                                <button id="check_date" class="submit" type="submit">Book Now</button>
+                                            </li>
+                                        </ul>
 
-                            @guest
-                                <div class="comment-login">
-                                    <h6>Please Login to comment</h6>
-                                    <a href="{{ route('login') }}" class="btn indigo">Login</a>
-                                </div>
-                            @endguest
-
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-
-                </div>
-
-
-                <div class="col s12 m4">
-                    <div class="clearfix">
-
-                        <div>
-                            <ul class="collection with-header m-t-0">
-                                <li class="collection-header grey lighten-4">
-                                    <h5 class="m-0">Book for Reservation</h5>
-                                </li>
-                                <li class="collection agent-message">
-                                    <form class="agent-message-box" action="{{route('admin.bookings.store')}}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <small class="text-red">*Note: Bookings are verified before reservations can be made</small>
-
-                                        <input type="hidden" name="room_id" value="{{ $room->id }}">
-
-                                        <div class="box">
-                                            <input type="text" name="name" placeholder="Your Name">
-                                        </div>
-                                        <div class="box">
-                                            <input type="email" name="email" placeholder="Your Email">
-                                        </div>
-                                        <div class="box">
-                                            <input type="number" name="phone" placeholder="Your Phone">
-                                        </div>
-                                        <div class="box">
-                                            <input type="number" name="nights" placeholder="Number of Nights">
-                                        </div>
-                                        <div class="box">
-                                            <input type="number" name="price" placeholder="Price = Room price x nights">
-                                        </div>
-                                        <div class="box">
-                                            <label for="pop">Proof of Payment</label>
-                                            <input type="file" name="pop" placeholder="Proof of Payment" >
-                                        </div>
-                                        <div class="box">
-                                            <button id="msgsubmitbtn" class="btn waves-effect waves-light w100 indigo" type="submit">
-                                                BOOK
-                                                <i class="material-icons right">send</i>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="wd wd-check-room">
+                        <h3 class="title">AVAILABILITY</h3>
+                            <div class="room-submit">
+                                @if ($room->status)
+                                    <button>Unavailable</button>
+                                @else
+                                    <button>Available &nbsp; &nbsp;<i class="fa fa-check"></i></button>
+                                @endif
+                            </div>
                     </div>
-                </div>
+                </aside>
             </div>
         </div>
-    </section>
 
-    {{-- RATING --}}
+    </div>
+
+    RATING --
     @php
         $rating = ($rating == null) ? 0 : $rating;
     @endphp
@@ -302,86 +240,4 @@
             });
         })
     </script>
-
-    <script src="{{ asset('frontend/js/jssor.slider.min.js') }}"></script>
-    <script>
-        jssor_1_slider_init = function() {
-
-            var jssor_1_SlideshowTransitions = [
-            {$Duration:1200,x:0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:-0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:-0.3,$During:{$Left:[0.3,0.7]},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,$SlideOut:true,$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:-0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:-0.3,$During:{$Top:[0.3,0.7]},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:0.3,$SlideOut:true,$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,$Cols:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:0.3,$Rows:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:0.3,$Cols:2,$During:{$Top:[0.3,0.7]},$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,y:-0.3,$Cols:2,$SlideOut:true,$ChessMode:{$Column:12},$Easing:{$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,$Rows:2,$During:{$Left:[0.3,0.7]},$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:-0.3,$Rows:2,$SlideOut:true,$ChessMode:{$Row:3},$Easing:{$Left:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,x:0.3,y:0.3,$Cols:2,$Rows:2,$During:{$Left:[0.3,0.7],$Top:[0.3,0.7]},$SlideOut:true,$ChessMode:{$Column:3,$Row:12},$Easing:{$Left:$Jease$.$InCubic,$Top:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,$Delay:20,$Clip:3,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,$Delay:20,$Clip:3,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,$Delay:20,$Clip:12,$Assembly:260,$Easing:{$Clip:$Jease$.$InCubic,$Opacity:$Jease$.$Linear},$Opacity:2},
-            {$Duration:1200,$Delay:20,$Clip:12,$SlideOut:true,$Assembly:260,$Easing:{$Clip:$Jease$.$OutCubic,$Opacity:$Jease$.$Linear},$Opacity:2}
-            ];
-
-            var jssor_1_options = {
-            $AutoPlay: 1,
-            $SlideshowOptions: {
-                $Class: $JssorSlideshowRunner$,
-                $Transitions: jssor_1_SlideshowTransitions,
-                $TransitionsOrder: 1
-            },
-            $ArrowNavigatorOptions: {
-                $Class: $JssorArrowNavigator$
-            },
-            $ThumbnailNavigatorOptions: {
-                $Class: $JssorThumbnailNavigator$,
-                $SpacingX: 5,
-                $SpacingY: 5
-            }
-            };
-
-            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
-
-            /*#region responsive code begin*/
-
-            var MAX_WIDTH = 980;
-
-            function ScaleSlider() {
-                var containerElement = jssor_1_slider.$Elmt.parentNode;
-                var containerWidth = containerElement.clientWidth;
-
-                if (containerWidth) {
-
-                    var expectedWidth = Math.min(MAX_WIDTH || containerWidth, containerWidth);
-
-                    jssor_1_slider.$ScaleWidth(expectedWidth);
-                }
-                else {
-                    window.setTimeout(ScaleSlider, 30);
-                }
-            }
-
-            ScaleSlider();
-
-            $Jssor$.$AddEvent(window, "load", ScaleSlider);
-            $Jssor$.$AddEvent(window, "resize", ScaleSlider);
-            $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);
-            /*#endregion responsive code end*/
-        };
-
-        @if(!$room->gallery->isEmpty())
-            jssor_1_slider_init();
-        @endif
-
-    </script>
-
 @endsection

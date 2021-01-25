@@ -60,9 +60,9 @@
                                     <td>{{$room->type->name}}</td>
                                     <td>{{$room->beds}}</td>
                                     <td>
-                                        @if($room->status == 1)
+                                        @if($room->status == 0)
                                             <span class="badge bg-green">Available</span>
-                                        @elseif($room->status == 0)
+                                        @elseif($room->status == 1)
                                             <span class="badge bg-pink">Taken</span>
                                         @elseif($room->status == 2)
                                             <span class="badge bg-orange">Reserved</span>

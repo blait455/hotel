@@ -6,7 +6,74 @@
 
 @section('content')
 
-    <section class="section">
+<div id="main-content">
+    <div class="page-title">
+        <div class="page-title-wrapper" data-stellar-background-ratio="0.5">
+            <div class="content container">
+                <h1 class="heading_primary">Rooms</h1>
+                <ul class="breadcrumbs">
+                    <li class="item"><a href="{{ url('/') }}">Home</a></li>
+                    <li class="item"><span class="separator"></span></li>
+                    <li class="item active">Rooms</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="site-content container">
+        <div class="rooms-content layout-grid style-02">
+            <div class="row">
+                @foreach ($rooms as $room)
+                    <div class="room col-sm-4 clearfix">
+                        <div class="room-item">
+                            <div class="room-media">
+                                <a href="{{ route('room.show',$room->slug) }}"><img src="{{Storage::url('room/'.$room->image)}}" alt=""></a>
+                            </div>
+                            <div class="room-summary">
+                                <h3 class="room-title">
+                                    <a href="{{ route('room.show',$room->slug) }}">{{ $room->name }}</a>
+                                </h3>
+                                <ul class="room-info">
+                                    @foreach ($room->features as $feature)
+                                        <li><span class="separator"></span></li>
+                                        <li>{{ ucfirst($feature->name) }}</li>
+                                    @endforeach
+                                </ul>
+                                <div class="line"></div>
+                                <div class="room-meta clearfix">
+                                    <div class="price">
+                                        <span class="title-price">From:</span>
+                                        <span class="price_value price_min"><span>&#8358;</span>{{ $room->price }}</span>
+                                        <span class="unit">Night</span>
+                                    </div>
+                                    {{-- <div class="rating"><span class="star"></span></div> --}}
+                                    <div class="rating" id="propertyrating-{{$room->id}}"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+
+                <ul class="loop-pagination">
+                    <li><a href="#"><i class="fa fa-angle-left"></i></a></li>
+                    <li><a href="#">1</a></li>
+                    <li class="active"><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fa fa-angle-right"></i></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+    {{-- <section class="section">
         <div class="container">
 
             <div class="row">
@@ -54,12 +121,12 @@
                                     <span>{{ ucfirst($room->type->name) }}</span>
                                 </div>
 
-                                {{-- @foreach ($room->features as $feature)
+                                @foreach ($room->features as $feature)
                                     <div class="address">
                                         <i class="small material-icons left">check_box</i>
                                         <span>{{ ucfirst($feature->name) }}</span>
                                     </div>
-                                @endforeach --}}
+                                @endforeach
 
                                 <h5>
                                     <span>&#8358;</span>{{ $room->price }}
@@ -89,7 +156,7 @@
             </div>
 
         </div>
-    </section>
+    </section> --}}
 
 @endsection
 

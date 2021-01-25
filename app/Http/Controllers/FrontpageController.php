@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use Illuminate\Http\Request;
 use App\Testimonial;
-// use App\Property;
 use App\Service;
 use App\Slider;
 use App\Post;
+use App\Room;
 
 class FrontpageController extends Controller
 {
-    
+
     public function index()
     {
         $sliders        = Slider::latest()->get();
-        // $properties     = Property::latest()->where('featured',1)->with('rating')->withCount('comments')->take(6)->get();
-        $services       = Service::orderBy('service_order')->get();
+        $services       = Service::all();
         $testimonials   = Testimonial::latest()->get();
-        $posts          = Post::latest()->where('status',1)->take(6)->get();
-
-        return view('frontend.index', compact('sliders','services','testimonials','posts'));
+        $posts          = Post::latest()->where('status',1)->inRandomOrder()->take(4)->get();
+        $event          = Category::latest()->where('name', 'event')->first();
+        $rooms          = Room::latest()->where('status', false)->with('rating')->withCount('comments')->take(3)->get();
+        $event          = $event->posts->first();
+        return view('frontend.index', compact('sliders','services','testimonials','posts', 'rooms', 'event'));
     }
 
 
@@ -68,7 +70,7 @@ class FrontpageController extends Controller
                                 ->when($featured, function ($query, $featured) {
                                     return $query->where('featured', '=', 1);
                                 })
-                                ->paginate(10); 
+                                ->paginate(10);
 
         return view('pages.search', compact('properties'));
     }

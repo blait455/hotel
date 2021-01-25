@@ -6,7 +6,82 @@
 
 @section('content')
 
-    <section class="section">
+    <div id="main-content">
+        <div class="page-title">
+            <div class="page-title-wrapper" data-stellar-background-ratio="0.5">
+                <div class="content container">
+                    <h1 class="heading_primary">Contact</h1>
+                    <ul class="breadcrumbs">
+                        <li class="item"><a href="{{ url('/') }}">Home</a></li>
+                        <li class="item"><span class="separator"></span></li>
+                        <li class="item active">Contact</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="site-content no-padding">
+            <div class="page-content">
+                <div class="container">
+                    <div class="empty-space"></div>
+                    <div class="row tm-flex">
+                        <div class="col-sm-6">
+                            <div class="sc-heading">
+                                <p class="first-title">SEND A</p>
+                                <h3 class="second-title">MESSAGE</h3>
+                                <p class="description">Do you have anything in your mind to tell us? <br>
+                                    Please don't hesitate to get in touch to us via our contact form.</p>
+                            </div>
+
+                            <div class="sc-contact-form">
+                                <form action="{{ route('contact.message') }}" id="ajaxform" method="post">
+                                    @csrf
+                                    <input type="hidden" name="mailto" value="{{ $contactsettings[0]['email'] ?? 'blait455@gmail.com' }}">
+                                    @auth
+                                        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+                                    @endauth
+
+                                    <input type="text" name="name" required placeholder="Your name*">
+                                    <input type="email" name="email" required placeholder="Your email*">
+                                    <input type="tel" name="phone" required placeholder="Your phone*">
+                                    <textarea name="message" id="your-message" cols="30" rows="10" required placeholder="Your message*"></textarea>
+                                    <input type="submit" class="submit" value="Send message">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="sc-contact-info">
+                                <div class="sc-heading">
+                                    <p class="first-title">GET IN TOUCH</p>
+                                    <p class="description"><a href="contact.html#google-map">{!! $contactsettings[0]['address'] !!}</a></p>
+                                </div>
+                                <p class="phone">Call. <a href="tel:{{ $contactsettings[0]['phone'] }}">{{ $contactsettings[0]['phone'] }}</a></p>
+                                <p class="email"><a href="mailto:{{ $contactsettings[0]['email'] }}">{{ $contactsettings[0]['email'] }}</a></p>
+                                <ul class="sc-social-link style-03">
+                                    <li><a target="_blank" class="face" href="https://www.facebook.com"
+                                        title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a target="_blank" class="twitter" href="https://www.twitter.com"
+                                        title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a target="_blank" class="skype" href="skype:hotamdhv?call" title="Skype"><i
+                                            class="fa fa-skype"></i></a></li>
+                                    <li><a class="instagram" href="http://www.thimpress.com/" title="Instagram"><i
+                                            class="fa fa-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div><br><br>
+                {{-- <div class="sc-google-map" id="sc-google-map">
+                    <div class="empty-space"></div>
+                    <div id="google-map"></div>
+                </div> --}}
+            </div>
+        </div>
+    </div>
+
+
+    {{-- <section class="section">
         <div class="container">
             <div class="row">
 
@@ -63,7 +138,7 @@
                                 <textarea id="message" name="message" class="materialize-textarea"></textarea>
                                 <label for="message">Message</label>
                             </div>
-                            
+
                             <button id="msgsubmitbtn" class="btn waves-effect waves-light indigo darken-4 btn-large" type="submit">
                                 <span>SEND</span>
                                 <i class="material-icons right">send</i>
@@ -102,7 +177,7 @@
 
             </div>
         </div>
-    </section>
+    </section> --}}
 
 @endsection
 

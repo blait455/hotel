@@ -30,10 +30,9 @@
                             <thead>
                                 <tr>
                                     <th>SL.</th>
+                                    <th>Image</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th>Icon</th>
-                                    <th>Order</th>
                                     <th width="100px">Action</th>
                                 </tr>
                             </thead>
@@ -41,6 +40,11 @@
                                 @foreach( $services as $key => $service)
                                 <tr>
                                     <td>{{$key+1}}</td>
+                                    <td>
+                                        @if(Storage::disk('public')->exists('service/'.$service->image))
+                                            <img src="{{Storage::url('service/'.$service->image)}}" alt="{{$service->title}}" width="160" class="img-responsive img-rounded">
+                                        @endif
+                                    </td>
                                     <td>{{$service->title}}</td>
                                     <td>{{$service->description}}</td>
                                     <td>
@@ -91,7 +95,7 @@
 
     <script>
         function deleteService(id){
-            
+
             swal({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",

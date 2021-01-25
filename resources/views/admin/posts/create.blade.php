@@ -53,7 +53,7 @@
                     <div class="form-group form-float">
                         <div class="form-line {{$errors->has('categories') ? 'focused error' : ''}}">
                             <label>Select Category</label>
-                            <select name="categories[]" class="form-control show-tick" multiple data-live-search="true">
+                            <select name="categories[]" class="form-control show-tick" data-live-search="true">
                                 @foreach($categories as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
@@ -71,7 +71,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="form-label">Featured Image</label>
                         <input type="file" name="image">

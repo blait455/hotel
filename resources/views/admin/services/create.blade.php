@@ -4,7 +4,7 @@
 
 @push('styles')
 
-    
+
 @endpush
 
 
@@ -24,7 +24,7 @@
                     <h2>CREATE SERVICE</h2>
                 </div>
                 <div class="body">
-                    <form action="{{route('admin.services.store')}}" method="POST">
+                    <form action="{{route('admin.services.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <div class="form-group form-float">
@@ -41,19 +41,13 @@
                             </div>
                         </div>
 
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="text" name="icon" class="form-control">
-                                <label class="form-label">Service Icon</label>
-                            </div>
-                            <small>To get icons name list just click the link: <a href="https://materializecss.com/icons.html" target="_blank">Materialize Icon</a></small>
-                        </div>
-
-                        <div class="form-group form-float">
-                            <div class="form-line">
-                                <input type="number" name="service_order" class="form-control" min="1">
-                                <label class="form-label">Service Order</label>
-                            </div>
+                        <div class="form-group">
+                            <img src="" id="slider-imgsrc" class="img-responsive">
+                            <input type="file" name="image" id="slider-image-input" style="display:none;">
+                            <button type="button" class="btn bg-grey btn-sm waves-effect m-t-15" id="slider-image-btn">
+                                <i class="material-icons">image</i>
+                                <span>UPLOAD IMAGE</span>
+                            </button>
                         </div>
 
                         <button type="submit" class="btn btn-indigo btn-lg m-t-15 waves-effect">
@@ -71,5 +65,25 @@
 
 
 @push('scripts')
+<script>
+    $(function(){
+        function showImage(fileInput,imgID){
+            if (fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $(imgID).attr('src',e.target.result);
+                    $(imgID).attr('alt',fileInput.files[0].name);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+        $('#slider-image-btn').on('click', function(){
+            $('#slider-image-input').click();
+        });
+        $('#slider-image-input').on('change', function(){
+            showImage(this, '#slider-imgsrc');
+        });
+    })
 
+</script>
 @endpush

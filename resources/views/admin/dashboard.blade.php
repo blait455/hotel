@@ -181,7 +181,7 @@
                                     <td>{{ ++$key }}.</td>
                                     <td>
                                         <span title="{{ $post->title }}">
-                                            {{ str_limit($post->title, 30) }}
+                                            {{ \Illuminate\Support\Str::limit($post->title, 30) }}
                                         </span>
                                     </td>
                                     <td>

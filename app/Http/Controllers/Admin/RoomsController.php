@@ -87,7 +87,7 @@ class RoomsController extends Controller
         $room->beds         = $request->beds;
         $room->floor        = $request->floor;
         $room->description  = $request->description;
-        $room->status       = true;
+        $room->status       = false;
         $room->type_id      = ($request->type_id);
         $room->image        = $imagename;
         $room->save();
