@@ -39,7 +39,7 @@
                         <span>Gallery</span>
                     </a>
                 </li>
-
+                
                 <li class="header">Acomodation</li>
                 <li class="{{ Request::is('admin/rooms*') ? 'active' : '' }}">
                     <a href="{{ route('admin.rooms.index') }}">

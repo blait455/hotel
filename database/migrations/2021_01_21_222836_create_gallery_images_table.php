@@ -22,7 +22,7 @@ class CreateGalleryImagesTable extends Migration
             $table->timestamps();
 
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
-            $table->foreign('food_id')->references('id')->on('food_items')->onDelete('cascade');
+            $table->foreign('food_item_id')->references('id')->on('food_items')->onDelete('cascade');
         });
     }
 

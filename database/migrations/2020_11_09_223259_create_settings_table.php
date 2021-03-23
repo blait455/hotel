@@ -18,6 +18,7 @@ class CreateSettingsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('logo');
+            $table->string('fav');
             $table->string('phone');
             $table->string('address');
             $table->string('footer');

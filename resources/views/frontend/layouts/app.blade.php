@@ -272,30 +272,30 @@
         @yield('scripts')
 
         <script>
-        $(document).ready(function(){
-            $('.sidenav').sidenav();
+            $(document).ready(function(){
+                $('.sidenav').sidenav();
 
-            $('.carousel.carousel-slider').carousel({
-                fullWidth: true,
-                indicators: true,
+                $('.carousel.carousel-slider').carousel({
+                    fullWidth: true,
+                    indicators: true,
+                });
+
+                $('.carousel.testimonials').carousel({
+                    indicators: true,
+                });
+
+                var city_list =<?php echo json_encode($citylist ?? '');?>;
+                $('input.autocomplete').autocomplete({
+                    data: city_list
+                });
+
+                $(".dropdown-trigger").dropdown({
+                    top: '65px'
+                });
+
+                $('.tooltipped').tooltip();
+
             });
-
-            $('.carousel.testimonials').carousel({
-                indicators: true,
-            });
-
-            var city_list =<?php echo json_encode($citylist ?? '');?>;
-            $('input.autocomplete').autocomplete({
-                data: city_list
-            });
-
-            $(".dropdown-trigger").dropdown({
-                top: '65px'
-            });
-
-            $('.tooltipped').tooltip();
-
-        });
         </script>
 
     </body>
