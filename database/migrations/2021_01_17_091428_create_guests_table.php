@@ -16,10 +16,21 @@ class CreateGuestsTable extends Migration
         Schema::create('guests', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('room_id')->unsigned();
+            $table->string('type');
             $table->string('name');
+            $table->string('address');
+            $table->string('profession');
             $table->string('email');
             $table->string('phone');
+            $table->string('Veh_reg_no');
+            $table->string('from');
+            $table->string('to');
+            $table->string('Purpose');
             $table->string('nights');
+            $table->string('no_in_room');
+            $table->string('nationality');
+            $table->string('emergency_name');
+            $table->string('emergency_phone');
             $table->string('status');
             $table->timestamps();
 

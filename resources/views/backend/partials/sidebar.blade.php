@@ -39,7 +39,45 @@
                         <span>Gallery</span>
                     </a>
                 </li>
-                
+
+                <li class="header">Administration</li>
+                <li class="{{ Request::is('admin/DCR*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Daily Cash Records</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/MP*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Imprest</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/SR*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Store Records</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/DP*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Drinks Purchase</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/RQ*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Requisition</span>
+                    </a>
+                </li>
+                <li class="{{ Request::is('admin/RL*') ? 'active' : '' }}">
+                    <a href="#">
+                        <i class="material-icons">view_list</i>
+                        <span>Receptionist Ledger</span>
+                    </a>
+                </li>
+
                 <li class="header">Acomodation</li>
                 <li class="{{ Request::is('admin/rooms*') ? 'active' : '' }}">
                     <a href="{{ route('admin.rooms.index') }}">
