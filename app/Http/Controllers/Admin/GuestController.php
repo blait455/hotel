@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Guest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use App\ReceptionistLedger;
 use App\Room;
 use Illuminate\Http\Request;
 use Toastr;
@@ -51,19 +56,53 @@ class GuestController extends Controller
             'email'     => 'required|email',
             'phone'     => 'required',
             'nights'    => 'required',
-            'price'     => 'required',
             'status'    => 'required'
         ]);
 
+        $image = $request->file('pop');
+        $slug  = Str::slug($request->name);
+
+        if(isset($image)){
+            $currentDate = Carbon::now()->toDateString();
+            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+
+            if(!Storage::disk('public')->exists('pop')){
+                Storage::disk('public')->makeDirectory('pop');
+            }
+            $pop = Image::make($image)->resize(100, 160)->save();
+            Storage::disk('public')->put('pop/'.$imagename, $pop);
+        }else{
+            $imagename = 'default.png';
+        }
+
         $guest = new Guest();
-        $guest->room_id    = $request->room_id;
-        $guest->name    = $request->name;
-        $guest->email   = $request->email;
-        $guest->phone   = $request->phone;
-        $guest->nights  = $request->nights;
-        $guest->price  = $request->price;
-        $guest->status  = $request->status;
+        $guest->room_id            =    $request->room_id;
+        $guest->type               =    $request->type;
+        $guest->name               =    $request->name;
+        $guest->address            =    $request->address;
+        $guest->profession         =    $request->profession;
+        $guest->email              =    $request->email;
+        $guest->phone              =    $request->phone;
+        $guest->Veh_reg_no         =    $request->veh_reg_no;
+        $guest->from               =    $request->from;
+        $guest->to                 =    $request->to;
+        $guest->Purpose            =    $request->purpose;
+        $guest->nights             =    $request->nights;
+        $guest->no_in_room         =    $request->no_in_room;
+        $guest->nationality        =    $request->nationality;
+        $guest->emergency_name     =    $request->emergency_name;
+        $guest->emergency_phone    =    $request->emergency_phone;
+        $guest->status             =    $request->status;
         $guest->save();
+
+        $rl = new ReceptionistLedger();
+        $rl->guest_id              =    $guest->id;
+        $rl->room_id               =    $guest->room_id;
+        $rl->payment_method        =    $request->payment_method;
+        $rl->payment_type          =    $request->payment_type;
+        $rl->pop                   =    $imagename;
+        $rl->rc                    =    $request->rc;
+        $rl->save();
 
         Toastr::success('message', 'Guest added successfully.');
         return redirect()->route('admin.guests.index');
@@ -101,13 +140,23 @@ class GuestController extends Controller
      */
     public function update(Request $request, Guest $guest)
     {
-        $guest->room_id    = $request->room_id;
-        $guest->name    = $request->name;
-        $guest->email   = $request->email;
-        $guest->phone   = $request->phone;
-        $guest->nights  = $request->nights;
-        $guest->price  = $request->price;
-        $guest->status  = $request->status;
+        $guest->room_id             =   $request->room_id;
+        $guest->type                =   $request->type;
+        $guest->name                =   $request->name;
+        $guest->address             =   $request->address;
+        $guest->profession          =   $request->profession;
+        $guest->email               =   $request->email;
+        $guest->phone               =   $request->phone;
+        $guest->Veh_reg_no          =   $request->veh_reg_no;
+        $guest->from                =   $request->from;
+        $guest->to                  =   $request->to;
+        $guest->Purpose             =   $request->purpose;
+        $guest->nights              =   $request->nights;
+        $guest->no_in_room          =   $request->no_in_room;
+        $guest->nationality         =   $request->nationality;
+        $guest->emergency_name      =   $request->emergency_name;
+        $guest->emergency_phone     =   $request->emergency_phone;
+        $guest->status              =   0;
 
         $guest->save();
 

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Guests')
+@section('title', 'Receptionist Ledger')
 
 @push('styles')
 
@@ -12,7 +12,7 @@
 @section('content')
 
     <div class="block-header">
-        <a href="{{route('admin.guests.create')}}" class="waves-effect waves-light btn right m-b-15 addbtn">
+        <a href="{{route('admin.rqt.create')}}" class="waves-effect waves-light btn right m-b-15 addbtn">
             <i class="material-icons left">add</i>
             <span>CREATE </span>
         </a>
@@ -22,7 +22,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header bg-indigo">
-                    <h2>GUEST LIST</h2>
+                    <h2>REQUEST TYPES</h2>
                 </div>
                 <div class="body">
                     <div class="table-responsive">
@@ -31,42 +31,25 @@
                                 <tr>
                                     <th>SN.</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Room</th>
-                                    <th>Price</th>
-                                    <th>Status</th>
                                     <th width="150">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                @foreach( $guests as $key => $guest )
+                                @foreach ($types as $key => $item)
                                 <tr>
                                     <td>{{$key+1}}</td>
-                                    <td>{{ $guest->name }}</td>
-                                    <td>{{ $guest->email }}</td>
-                                    <td>{{ $guest->phone}}</td>
-                                    <td>{{ $guest->room->name}}</td>
-                                    <td><span>&#8358;</span>{{ $guest->room->price}}</td>
-                                    <td>
-                                        @if($guest->status == true)
-                                            <span class="badge bg-green">Checked in</span>
-                                        @else
-                                            <span class="badge bg-pink">Booked</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $item->name }}</td>
                                     <td class="text-center">
-                                        <a href="{{route('admin.guests.edit',$guest->id)}}" class="btn btn-info btn-sm waves-effect">
+                                        <a href="{{route('admin.rqt.edit',$item->id)}}" class="btn btn-info btn-sm waves-effect">
                                             <i class="material-icons">edit</i>
                                         </a>
                                         {{-- @can('delete') --}}
-                                            <button type="button" class="btn btn-danger btn-sm waves-effect" onclick="deleteGuest({{$guest->id}})">
+                                            <button type="button" class="btn btn-danger btn-sm waves-effect" onclick="deleteGuest({{$item->id}})">
                                                 <i class="material-icons">delete</i>
                                             </button>
-                                            <form action="{{route('admin.guests.destroy',$guest->id)}}" method="POST" id="del-guest-{{$guest->id}}" style="display:none;">
+                                            <form action="{{route('admin.rqt.delete',$item->id)}}" method="POST" id="del-guest-{{$item->id}}" style="display:none;">
                                                 @csrf
-                                                @method('DELETE')
                                             </form>
                                         {{-- @endcan --}}
                                     </td>
@@ -115,7 +98,7 @@
                     document.getElementById('del-guest-'+id).submit();
                     swal(
                     'Deleted!',
-                    'Room has been deleted.',
+                    'Record has been deleted.',
                     'success'
                     )
                 }

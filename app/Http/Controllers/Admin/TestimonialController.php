@@ -13,6 +13,10 @@ use Toastr;
 
 class TestimonialController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -114,7 +118,7 @@ class TestimonialController extends Controller
             'testimonial' => 'required|max:200',
         ]);
 
-        $image = $request->file('image'); 
+        $image = $request->file('image');
         $slug  = Str::slug($request->title);
         $testimonial = Testimonial::find($id);
 

@@ -23,6 +23,8 @@ class CreateReceptionistLedgersTable extends Migration
             $table->integer('discounted_amount')->nullable();
             $table->string('remarks');
             $table->string('balance')->nullable();
+            $table->string('pop')->nullable();
+            $table->string('rc')->nullable();
             $table->timestamps();
         });
     }

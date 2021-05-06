@@ -15,7 +15,7 @@
     <div class="block-header"></div>
 
     <div class="row clearfix">
-        <form action="{{route('admin.guests.store')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('admin.rl.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
             <div class="card">
@@ -23,91 +23,28 @@
                     <h2>ADD GUEST</h2>
                 </div>
                 <div class="body">
-
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" name="name" class="form-control" value="{{old('name')}}">
-                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="discount" value="{{old('discount')}}" required>
+                            <label class="form-label">Discount</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="email" name="email" class="form-control" value="{{old('email')}}">
-                            <label class="form-label">Email</label>
+                            <input type="text" class="form-control" name="discounted_amount" value="{{old('discount_amount')}}" required>
+                            <label class="form-label">Discounted amount</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
-                            <label class="form-label">Phone</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="address" value="{{old('address')}}" required>
-                            <label class="form-label">Address</label>
+                            <input type="number" class="form-control" name="balance" value="{{old('balance')}}" required>
+                            <label class="form-label">Balance</label>
                         </div>
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" class="form-control" name="profession" value="{{old('profession')}}" required>
-                            <label class="form-label">Profession</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="veh_reg_no" value="{{old('veh_reg_no')}}" required>
-                            <label class="form-label">Vehicle Registration number</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="from" value="{{old('from')}}" required>
-                            <label class="form-label">Arriving from</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="to" value="{{old('to')}}" required>
-                            <label class="form-label">Departing to</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="purpose" value="{{old('purpose')}}" required>
-                            <label class="form-label">Purpose of visit</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="nights" value="{{old('night')}}" required>
-                            <label class="form-label">Number of nights</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="no_in_room" value="{{old('no_in_room')}}" required>
-                            <label class="form-label">Number in room</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="nationality" value="{{old('nationality')}}" required>
-                            <label class="form-label">Nationality</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="emergency_name" value="{{old('emergency_name')}}" required>
-                            <label class="form-label">Emergency contact name</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="emergency_phone" value="{{old('emergency_phone')}}" required>
-                            <label class="form-label">Emergency contact phone</label>
+                            <input type="text" class="form-control" name="remarks" value="{{old('remarks')}}" required>
+                            <label class="form-label">Remarks</label>
                         </div>
                     </div>
 
@@ -127,22 +64,12 @@
                 </div>
                 <div class="body">
                     <div class="form-group form-float">
-                        <div class="form-line {{$errors->has('type') ? 'focused error' : ''}}">
-                            <label>Guest Type</label>
-                            <select name="type" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="regular">Regular</option>
-                                <option value="special">Special <small>(FUW or Palace)</small></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
                         <div class="form-line {{$errors->has('room') ? 'focused error' : ''}}">
-                            <label>Select Room</label>
+                            <label>Select Guest</label>
                             <select name="room_id" class="form-control show-tick">
                                 <option value="">-- Please select --</option>
-                                @foreach ($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->name }}&nbsp; &nbsp;<span>&#8358;{{ $room->price }}</span></option>
+                                @foreach ($guests as $guest)
+                                    <option value="{{ $guest->id }}">{{ $guest->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -265,5 +192,26 @@
             tinyMCE.baseURL = '{{asset('backend/plugins/tinymce')}}';
         });
     </script>
+    <script>
+        $(function(){
+            function showImage(fileInput,imgID){
+                if (fileInput.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e){
+                        $(imgID).attr('src',e.target.result);
+                        $(imgID).attr('alt',fileInput.files[0].name);
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+            $('#testimonial-image-btn').on('click', function(){
+                $('#testimonial-image-input').click();
+            });
+            $('#testimonial-image-input').on('change', function(){
+                showImage(this, '#testimonial-imgsrc');
+            });
+        })
+    </script>
+
 
 @endpush

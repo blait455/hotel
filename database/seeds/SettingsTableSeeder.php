@@ -16,6 +16,7 @@ class SettingsTableSeeder extends Seeder
             'name'      =>  'Rohi Grand Suites',
             'email'     =>  'info@rohigrandsuites.com',
             'logo'      =>  'logo.png',
+            'fav'      =>  'fav.png',
             'phone'     =>  '0321564987',
             'address'   =>  'No.10 GRA, Wukari Ini road, Taaba state, Nigeria',
             'footer'    =>  'RGS',

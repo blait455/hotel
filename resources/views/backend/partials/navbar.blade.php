@@ -4,7 +4,7 @@
         <div class="navbar-header">
             <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
             <a href="javascript:void(0);" class="bars"></a>
-            <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Real Estate</a>
+            <a class="navbar-brand" href="{{ route('admin.dashboard') }}">{{ $settings->name }}</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navbar-collapse">
@@ -48,7 +48,7 @@
                     </ul>
                 </li> --}}
                 <!-- #END# Notifications -->
-                
+
 
                 <li class="dropdown">
                     <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">

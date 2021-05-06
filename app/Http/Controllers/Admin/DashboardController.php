@@ -27,8 +27,11 @@ use Hash;
 
 class DashboardController extends Controller
 {
-    public function index()
-    {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
+    public function index(){
         $roomcount      = Room::count();
         $postcount      = Post::count();
         $commentcount   = Comment::count();

@@ -14,6 +14,10 @@ use Toastr;
 
 class SliderController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -113,7 +117,7 @@ class SliderController extends Controller
             'image' => 'mimes:jpeg,jpg,png'
         ]);
 
-        $image = $request->file('image'); 
+        $image = $request->file('image');
         $slug  = Str::slug($request->title);
         $slider = Slider::find($id);
 

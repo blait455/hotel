@@ -40,40 +40,58 @@
                     </a>
                 </li>
 
-                <li class="header">Administration</li>
+                <li class="header">Records</li>
                 <li class="{{ Request::is('admin/DCR*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.dcr') }}">
+                        <i class="material-icons">payment</i>
                         <span>Daily Cash Records</span>
                     </a>
                 </li>
                 <li class="{{ Request::is('admin/MP*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.mp') }}">
+                        <i class="material-icons">list</i>
                         <span>Imprest</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/RI*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.ri') }}">
+                        <i class="material-icons">view_agenda</i>
+                        <span>Store Items</span>
+                    </a>
+                </li>
                 <li class="{{ Request::is('admin/SR*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.sr') }}">
+                        <i class="material-icons">assignment</i>
                         <span>Store Records</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/SP*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.sp') }}">
+                        <i class="material-icons">store_mall_directory</i>
+                        <span>Drinks Suppliers</span>
+                    </a>
+                </li>
                 <li class="{{ Request::is('admin/DP*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.dp') }}">
+                        <i class="material-icons">subject</i>
                         <span>Drinks Purchase</span>
                     </a>
                 </li>
                 <li class="{{ Request::is('admin/RQ*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.rq') }}">
+                        <i class="material-icons">reorder</i>
                         <span>Requisition</span>
                     </a>
                 </li>
+                <li class="{{ Request::is('admin/RQT*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.rqt') }}">
+                        <i class="material-icons">grading</i>
+                        <span>Request types</span>
+                    </a>
+                </li>
                 <li class="{{ Request::is('admin/RL*') ? 'active' : '' }}">
-                    <a href="#">
-                        <i class="material-icons">view_list</i>
+                    <a href="{{ route('admin.rl') }}">
+                        <i class="material-icons">article</i>
                         <span>Receptionist Ledger</span>
                     </a>
                 </li>

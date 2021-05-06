@@ -11,6 +11,8 @@ use App\Post;
 use App\Tag;
 use App\Category;
 use App\Setting;
+use Illuminate\Support\Facades\DB;
+
 // use App\Message;
 
 
@@ -38,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
             // }
             // view()->share('citylist', $citylist);
 
+            $settings = DB::table('settings')->first();
+            view()->share('settings', $settings);
 
             // SHARE WITH SPECIFIC VIEW
             // view()->composer('pages.search', function($view) {

@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Real Estate - @yield('title')</title>
+    <title>{{ $settings->name }} - @yield('title')</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        
+
         {{-- MAIN NAVIGATION BAR --}}
         @include('backend.partials.navbar')
 
@@ -78,7 +78,7 @@
         <section>
             @include('backend.partials.sidebar')
         </section>
-        
+
         {{-- MAIN CONTENT SECTION --}}
         <section class="content">
             <div class="container-fluid">
@@ -95,10 +95,10 @@
 
         <!-- Slimscroll Plugin Js -->
         <script src="{{ asset('backend/plugins/jquery-slimscroll/jquery.slimscroll.js') }}"></script>
-        
+
         <!-- Waves Effect Plugin Js -->
         <script src="{{ asset('backend/plugins/node-waves/waves.js') }}"></script>
-        
+
         {{-- PUSH SCRIPTS --}}
         @stack('scripts')
 
@@ -118,7 +118,7 @@
                 @foreach ($errors->all() as $error)
                     toastr.error('{{ $error }}','Error',{
                         closeButtor: true,
-                        progressBar: true 
+                        progressBar: true
                     });
                 @endforeach
             @endif

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', 'Add Guest')
+@section('title', 'Edit Guest')
 
 @push('styles')
 
@@ -15,108 +15,45 @@
     <div class="block-header"></div>
 
     <div class="row clearfix">
-        <form action="{{route('admin.guests.store')}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('admin.rl.update', $rl->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="col-lg-8 col-md-4 col-sm-12 col-xs-12">
             <div class="card">
                 <div class="header bg-indigo">
-                    <h2>ADD GUEST</h2>
+                    <h2>Edit Ledger</h2>
                 </div>
                 <div class="body">
 
-                    <div class="form-group form-float">
+                    {{-- <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="text" name="name" class="form-control" value="{{old('name')}}">
+                            <input type="text" name="name" class="form-control" value="{{$rl->guest->name}}">
                             <label class="form-label">Name</label>
                         </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="email" name="email" class="form-control" value="{{old('email')}}">
-                            <label class="form-label">Email</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" name="phone" class="form-control" value="{{old('phone')}}">
-                            <label class="form-label">Phone</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="address" value="{{old('address')}}" required>
-                            <label class="form-label">Address</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="profession" value="{{old('profession')}}" required>
-                            <label class="form-label">Profession</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="veh_reg_no" value="{{old('veh_reg_no')}}" required>
-                            <label class="form-label">Vehicle Registration number</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="from" value="{{old('from')}}" required>
-                            <label class="form-label">Arriving from</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="to" value="{{old('to')}}" required>
-                            <label class="form-label">Departing to</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="purpose" value="{{old('purpose')}}" required>
-                            <label class="form-label">Purpose of visit</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="nights" value="{{old('night')}}" required>
-                            <label class="form-label">Number of nights</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="no_in_room" value="{{old('no_in_room')}}" required>
-                            <label class="form-label">Number in room</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="nationality" value="{{old('nationality')}}" required>
-                            <label class="form-label">Nationality</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="text" class="form-control" name="emergency_name" value="{{old('emergency_name')}}" required>
-                            <label class="form-label">Emergency contact name</label>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
-                        <div class="form-line">
-                            <input type="number" class="form-control" name="emergency_phone" value="{{old('emergency_phone')}}" required>
-                            <label class="form-label">Emergency contact phone</label>
-                        </div>
-                    </div>
-
-                    {{-- <hr>
-                    <div class="form-group">
-                        <label for="tinymce">Description</label>
-                        <textarea name="description" id="tinymce">{{old('description')}}</textarea>
                     </div> --}}
-
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="discount" value="{{$rl->discount}}" >
+                            <label class="form-label">Discount</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="discounted_amount" value="{{$rl->discounted_amount}}">
+                            <label class="form-label">Discounted amount</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="number" class="form-control" name="balance" value="{{$rl->balance}}">
+                            <label class="form-label">Balance</label>
+                        </div>
+                    </div>
+                    <div class="form-group form-float">
+                        <div class="form-line">
+                            <input type="text" class="form-control" name="remarks" value="{{$rl->remarks}}">
+                            <label class="form-label">Remarks</label>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,44 +64,25 @@
                 </div>
                 <div class="body">
                     <div class="form-group form-float">
-                        <div class="form-line {{$errors->has('type') ? 'focused error' : ''}}">
-                            <label>Guest Type</label>
-                            <select name="type" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="regular">Regular</option>
-                                <option value="special">Special <small>(FUW or Palace)</small></option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group form-float">
                         <div class="form-line {{$errors->has('room') ? 'focused error' : ''}}">
                             <label>Select Room</label>
                             <select name="room_id" class="form-control show-tick">
                                 <option value="">-- Please select --</option>
                                 @foreach ($rooms as $room)
-                                    <option value="{{ $room->id }}">{{ $room->name }}&nbsp; &nbsp;<span>&#8358;{{ $room->price }}</span></option>
+                                    <option value="{{ $room->id }}" {{ $rl->room->name == $room->name ? 'selected' : '' }}>{{ $room->name }}&nbsp; &nbsp;<span>&#8358;{{ $room->price }}</span></option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="form-group form-float">
-                        <div class="form-line {{$errors->has('floor') ? 'focused error' : ''}}">
-                            <label>Status</label>
-                            <select name="status" class="form-control show-tick">
-                                <option value="">-- Please select --</option>
-                                <option value="1">Checked in</option>
-                                <option value="0">Booked</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="form-group form-float">
                         <div class="form-line {{$errors->has('floor') ? 'focused error' : ''}}">
                             <label>Payment method</label>
                             <select name="payment_method" class="form-control show-tick">
                                 <option value="">-- Please select --</option>
-                                <option value="cash">Cash</option>
-                                <option value="bank">Bank transfer</option>
-                                <option value="pos">POS</option>
+                                <option value="cash" {{ $rl->payment_method == 'cash' ? 'selected' : '' }}>Cash</option>
+                                <option value="bank" {{ $rl->payment_method == 'bank' ? 'selected' : '' }}>Bank transfer</option>
+                                <option value="pos" {{ $rl->payment_method == 'pos' ? 'selected' : '' }}>POS</option>
                             </select>
                         </div>
                     </div>
@@ -173,12 +91,17 @@
                             <label>Payment Type</label>
                             <select name="payment_type" class="form-control show-tick">
                                 <option value="">-- Please select --</option>
-                                <option value="full">Full payment</option>
-                                <option value="part">part payment</option>
+                                <option value="full" {{ $rl->payment_type == 'full' ? 'selected' : '' }}>Full payment</option>
+                                <option value="part" {{ $rl->payment_type == 'part' ? 'selected' : '' }}>part payment</option>
                             </select>
                         </div>
                     </div>
                     <hr>
+                    @if(Storage::disk('public')->exists('pop/'.$rl->pop))
+                        <div class="form-group">
+                            <img src="{{Storage::url('pop/'.$rl->pop)}}" id="testimonial-imgsrc-edit" alt="Proof of payment" class="img-responsive img-rounded">
+                        </div>
+                    @endif
                     <div class="form-group">
                         <img src="" id="testimonial-imgsrc" class="img-responsive">
                         <input type="file" name="pop" id="testimonial-image-input" style="display:none;">
@@ -189,7 +112,7 @@
                     </div>
                     <div class="form-group form-float">
                         <div class="form-line">
-                            <input type="reference_code" name="rc" class="form-control">
+                            <input type="reference_code" name="rc" class="form-control" value="{{ $rl->rc }}">
                             <label class="form-label">POS reference code</label>
                         </div>
                     </div>
@@ -198,7 +121,7 @@
             <div class="card">
                 <div class="body">
                     {{-- BUTTON --}}
-                    <a href="{{route('admin.guests.index')}}" class="btn btn-danger btn-lg m-t-15 waves-effect">
+                    <a href="{{route('admin.rl')}}" class="btn btn-danger btn-lg m-t-15 waves-effect">
                         <i class="material-icons left">arrow_back</i>
                         <span>BACK</span>
                     </a>
@@ -265,5 +188,26 @@
             tinyMCE.baseURL = '{{asset('backend/plugins/tinymce')}}';
         });
     </script>
+    <script>
+        $(function(){
+            function showImage(fileInput,imgID){
+                if (fileInput.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e){
+                        $(imgID).attr('src',e.target.result);
+                        $(imgID).attr('alt',fileInput.files[0].name);
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
+                }
+            }
+            $('#testimonial-image-btn').on('click', function(){
+                $('#testimonial-image-input').click();
+            });
+            $('#testimonial-image-input').on('change', function(){
+                showImage(this, '#testimonial-imgsrc');
+            });
+        })
+    </script>
+
 
 @endpush
